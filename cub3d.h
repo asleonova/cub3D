@@ -6,7 +6,7 @@
 /*   By: dbliss <dbliss@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/05 13:26:35 by dbliss            #+#    #+#             */
-/*   Updated: 2020/08/05 14:21:46 by dbliss           ###   ########.fr       */
+/*   Updated: 2020/08/05 15:43:30 by dbliss           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,7 @@
 # include "libft_master/libft.h"
 # include "get_next_line/get_next_line.h"
 #include <fcntl.h>
-#include <stdlib.h>
 
-void	make_map(t_list **head, int size);
+char    **make_map(t_list **head, int size);
 
 #endif
