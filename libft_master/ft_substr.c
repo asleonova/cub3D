@@ -3,42 +3,34 @@
 /*                                                        :::      ::::::::   */
 /*   ft_substr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: csnowbal <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: alkanaev <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/05/02 19:23:07 by csnowbal          #+#    #+#             */
-/*   Updated: 2020/05/02 19:25:25 by csnowbal         ###   ########.fr       */
+/*   Created: 2019/11/08 12:49:17 by alkanaev          #+#    #+#             */
+/*   Updated: 2019/11/18 14:23:53 by alkanaev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-/*
-** Allocates (with malloc(3)) and returns a substring from the string ’s’.
-** The substring begins at index ’start’ and is of maximum size ’len’.
-*/
-
 char	*ft_substr(char const *s, unsigned int start, size_t len)
 {
-	size_t	i;
-	char	*str;
+	size_t	nach;
+	int		i;
+	char	*sub;
 
-	if (!s)
+	if (s == NULL)
 		return (NULL);
-	if (ft_strlen(s) < start)
-	{
-		if (!(str = (char *)malloc(sizeof(char))))
-			return (NULL);
-		*str = '\0';
-		return (str);
-	}
-	if (!(str = (char *)malloc(sizeof(char) * (len + 1))))
+	if (ft_strlen((char*)s) < (size_t)start)
+		return (ft_strdup(""));
+	if (!(sub = (char*)malloc(sizeof(char) * (len + 1))))
 		return (NULL);
+	nach = 0;
 	i = 0;
-	while (i < len)
+	while (nach < len)
 	{
-		str[i] = s[i + start];
-		i++;
+		sub[i++] = s[start++];
+		nach++;
 	}
-	str[i] = '\0';
-	return (str);
+	sub[i] = '\0';
+	return (sub);
 }

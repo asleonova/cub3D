@@ -3,35 +3,29 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strrchr.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: csnowbal <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: alkanaev <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/04/30 12:50:41 by csnowbal          #+#    #+#             */
-/*   Updated: 2020/05/01 21:11:49 by csnowbal         ###   ########.fr       */
+/*   Created: 2019/11/08 12:47:14 by alkanaev          #+#    #+#             */
+/*   Updated: 2019/11/18 13:47:01 by alkanaev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-/*
-** Locates the last occurrence of 'c' in the string pointed to by 's'.
-** The terminating null character is considered part of the string;
-** therefore if 'c' is `\0', the functions locate the terminating `\0'.
-*/
-
-char		*ft_strrchr(const char *s, int c)
+char	*ft_strrchr(const char *str, int sym)
 {
-	char	*last;
+	int		i;
+	char	*s2;
 
-	last = NULL;
-	while (*s)
-	{
-		if (*s == c)
-			last = ((char *)s);
-		s++;
-	}
-	if (last)
-		return (last);
-	if (c == '\0')
-		return ((char *)s);
-	return (0);
+	i = 0;
+	while (str[i])
+		i++;
+	s2 = (char*)str;
+	while (i != 0 && s2[i] != sym)
+		i--;
+	if (s2[i] == sym)
+		return (&s2[i]);
+	if (s2[i] == '\0' && sym == '\0')
+		return (&s2[i]);
+	return (NULL);
 }

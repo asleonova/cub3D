@@ -3,47 +3,34 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strlcat.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: csnowbal <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: alkanaev <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/04/30 12:51:01 by csnowbal          #+#    #+#             */
-/*   Updated: 2020/05/03 19:50:02 by csnowbal         ###   ########.fr       */
+/*   Created: 2019/11/08 12:41:23 by alkanaev          #+#    #+#             */
+/*   Updated: 2019/11/25 13:38:29 by alkanaev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-/*
-** Safer strcat version.
-** Concatenation 'dest' and 'src' strings
-** until the end of the string is found or size characters are added.
-** 0 at the end of concatenated lines.
-*/
-
 size_t	ft_strlcat(char *dest, const char *src, size_t size)
 {
-	const char	*odst;
-	const char	*osrc;
-	size_t		n;
-	size_t		dlen;
+	size_t			len;
+	unsigned int	i;
+	unsigned int	j;
 
-	odst = dest;
-	osrc = src;
-	n = size;
-	while (n-- && *dest)
-		dest++;
-	dlen = dest - odst;
-	n = size - dlen;
-	if (n-- == 0)
-		return (dlen + ft_strlen(src));
-	while (*src)
-	{
-		if (n)
-		{
-			*dest++ = *src;
-			n--;
-		}
-		src++;
-	}
-	*dest = '\0';
-	return (dlen + (src - osrc));
+	i = 0;
+	j = 0;
+	len = 0;
+	while (dest[i])
+		i++;
+	while (src[len])
+		len++;
+	if (size <= i)
+		len += size;
+	else
+		len += i;
+	while (src[j] && (i + 1) < size)
+		dest[i++] = src[j++];
+	dest[i] = '\0';
+	return (len);
 }

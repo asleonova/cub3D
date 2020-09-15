@@ -3,34 +3,49 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strtrim.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: csnowbal <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: alkanaev <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/04/30 12:50:38 by csnowbal          #+#    #+#             */
-/*   Updated: 2020/05/04 00:00:07 by csnowbal         ###   ########.fr       */
+/*   Created: 2019/11/08 12:48:01 by alkanaev          #+#    #+#             */
+/*   Updated: 2019/11/18 14:20:42 by alkanaev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-/*
-** Allocates (with malloc(3)) and returns a copy of
-** ’s1’ with the characters specified in ’set’ removed from the beginning
-** and the end of the string.
-*/
+char	*ft_strncpy(char *dest, const char *src, size_t n)
+{
+	size_t	i;
+
+	i = 0;
+	while (src[i] && i < n)
+	{
+		dest[i] = src[i];
+		i++;
+	}
+	while (i < n)
+		dest[i++] = '\0';
+	return (dest);
+}
 
 char	*ft_strtrim(char const *s1, char const *set)
 {
+	size_t	start;
 	size_t	len;
-	char	*str;
+	char	*trimed;
 
-	if (!s1 || !set)
+	if (s1 == NULL || set == NULL)
 		return (NULL);
-	while (*s1 && ft_strchr(set, *s1))
-		s1++;
-	len = ft_strlen(s1);
-	while (len && ft_strchr(set, s1[len]))
-		len--;
-	if (!(str = ft_substr((char *)s1, 0, len + 1)))
+	start = 0;
+	while (s1[start] && ft_strchr(set, s1[start]) != NULL)
+		start++;
+	len = ft_strlen((char*)&s1[start]);
+	if (len != 0)
+		while (s1[start + len - 1]
+				&& ft_strchr(set, s1[start + len - 1]) != NULL)
+			len--;
+	if ((trimed = (char*)malloc(sizeof(char) * (len + 1))) == NULL)
 		return (NULL);
-	return (str);
+	trimed = ft_strncpy(trimed, &s1[start], len);
+	trimed[len] = '\0';
+	return (trimed);
 }

@@ -3,20 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   ft_isalnum.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: csnowbal <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: alkanaev <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/04/30 12:52:30 by csnowbal          #+#    #+#             */
-/*   Updated: 2020/05/01 13:19:58 by csnowbal         ###   ########.fr       */
+/*   Created: 2019/11/08 12:23:11 by alkanaev          #+#    #+#             */
+/*   Updated: 2019/11/18 13:56:40 by alkanaev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-/*
-** Checks if the character is alphanumeric.
-*/
-
-int	ft_isalnum(int c)
+int	ft_isalnum(int sym)
 {
-	return (ft_isalpha(c) || ft_isdigit(c));
+	if ((sym >= 48 && sym <= 57) || (sym >= 65 && sym <= 90)
+		|| (sym >= 97 && sym <= 122))
+		return (1);
+	return (0);
 }

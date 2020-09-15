@@ -3,31 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   ft_lstadd_front.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: csnowbal <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: alkanaev <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/04/30 12:52:11 by csnowbal          #+#    #+#             */
-/*   Updated: 2020/05/01 16:31:01 by csnowbal         ###   ########.fr       */
+/*   Created: 2019/11/25 12:43:30 by alkanaev          #+#    #+#             */
+/*   Updated: 2019/11/25 16:25:23 by alkanaev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-/*
-** Adds the element ’new’ at the beginning of the list.
-*/
-
 void	ft_lstadd_front(t_list **lst, t_list *new)
 {
-	t_list	*temp;
-
-	if (!lst)
+	if (!lst || !new)
 		return ;
-	if (!*lst)
-		*lst = new;
-	else if (*lst && new)
-	{
-		temp = *lst;
-		new->next = temp;
-		*lst = new;
-	}
+	new->next = *lst;
+	*lst = new;
 }

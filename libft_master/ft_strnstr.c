@@ -3,39 +3,28 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strnstr.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: csnowbal <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: alkanaev <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/04/30 12:50:46 by csnowbal          #+#    #+#             */
-/*   Updated: 2020/05/03 23:38:31 by csnowbal         ###   ########.fr       */
+/*   Created: 2019/11/08 12:46:29 by alkanaev          #+#    #+#             */
+/*   Updated: 2019/11/18 14:20:14 by alkanaev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-/*
-** Locates the first occurrence of the null-terminated
-** string 'little' in the string 'big',
-** where not more than 'len' characters are searched.
-** Characters that appear after a `\0' character are not searched.
-*/
-
-char	*ft_strnstr(const char *big, const char *little, size_t len)
+char	*ft_strnstr(const char *where, const char *obj, size_t len)
 {
-	size_t	i;
-	size_t	j;
+	size_t	len_obj;
 
-	i = 0;
-	j = 0;
-	if (!little)
-		return ((char *)big);
-	while (big[i] && (i < len))
+	if (*obj == '\0')
+		return ((char *)where);
+	len_obj = ft_strlen((char *)obj);
+	while (*where != '\0' && len >= len_obj)
 	{
-		while ((big[i + j] == little[j]) && little[j] && ((i + j) < len))
-			j++;
-		if (!little[j])
-			return ((char *)&big[i]);
-		j = 0;
-		i++;
+		if (*where == *obj && ft_memcmp(where, obj, len_obj) == 0)
+			return ((char *)where);
+		len--;
+		where++;
 	}
 	return (NULL);
 }

@@ -3,42 +3,33 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strlcpy.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: csnowbal <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: alkanaev <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/04/30 12:47:44 by csnowbal          #+#    #+#             */
-/*   Updated: 2020/05/04 18:29:01 by csnowbal         ###   ########.fr       */
+/*   Created: 2019/11/08 12:41:54 by alkanaev          #+#    #+#             */
+/*   Updated: 2019/11/18 13:42:52 by alkanaev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-/*
-** Safer strcpy version.
-** Takes the 'dest' size as a parameter and will not write more
-** than that many bytes, to prevent buffer overflow.
-*/
-
-size_t	ft_strlcpy(char *dest, char *src, size_t size)
+size_t	ft_strlcpy(char *dest, const char *src, size_t size)
 {
-	const char	*osrc;
-	size_t		n;
+	size_t len;
+	size_t i;
 
-	osrc = src;
-	n = size;
-	if (n)
+	len = 0;
+	if (dest == NULL)
+		return (0);
+	while (src[len])
+		len++;
+	i = 0;
+	if (!size)
+		return (len);
+	while (src[i] && i < (size - 1))
 	{
-		while (--n)
-		{
-			if (*src)
-				*dest++ = *src++;
-		}
+		dest[i] = src[i];
+		i++;
 	}
-	if (n == 0)
-	{
-		if (size)
-			*dest = '\0';
-		while (*src++)
-			;
-	}
-	return (src - osrc - 1);
+	dest[i] = '\0';
+	return (len);
 }

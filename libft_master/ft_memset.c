@@ -3,27 +3,24 @@
 /*                                                        :::      ::::::::   */
 /*   ft_memset.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: csnowbal <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: alkanaev <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/04/30 12:51:37 by csnowbal          #+#    #+#             */
-/*   Updated: 2020/05/03 18:00:59 by csnowbal         ###   ########.fr       */
+/*   Created: 2019/11/08 12:36:03 by alkanaev          #+#    #+#             */
+/*   Updated: 2019/11/13 14:54:28 by alkanaev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-/*
-** Fills the first 'n' bytes memory ares 's' with character 'c'.
-*/
-
-void	*ft_memset(void *s, int c, size_t n)
+void	*ft_memset(void *smt, int sym, size_t len)
 {
-	unsigned char	*ptr;
-	unsigned char	sym;
+	size_t	i;
 
-	ptr = (unsigned char *)s;
-	sym = (unsigned char)c;
-	while (n--)
-		*(ptr++) = sym;
-	return (s);
+	i = 0;
+	while (i < len)
+	{
+		((char *)smt)[i] = (const char)sym;
+		i++;
+	}
+	return (smt);
 }

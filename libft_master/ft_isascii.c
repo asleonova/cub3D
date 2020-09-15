@@ -3,20 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   ft_isascii.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: csnowbal <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: alkanaev <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/04/30 12:52:25 by csnowbal          #+#    #+#             */
-/*   Updated: 2020/05/01 13:22:08 by csnowbal         ###   ########.fr       */
+/*   Created: 2019/11/08 12:24:47 by alkanaev          #+#    #+#             */
+/*   Updated: 2019/11/18 13:52:31 by alkanaev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-/*
-** Checks if a character in ASCII table.
-*/
-
-int	ft_isascii(int c)
+int	ft_isascii(int sym)
 {
-	return (c >= 0 && c <= 127);
+	if (sym >= 0 && sym <= 127)
+		return (1);
+	return (0);
 }

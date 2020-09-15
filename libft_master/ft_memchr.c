@@ -3,31 +3,25 @@
 /*                                                        :::      ::::::::   */
 /*   ft_memchr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: csnowbal <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: alkanaev <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/04/30 12:51:48 by csnowbal          #+#    #+#             */
-/*   Updated: 2020/05/03 17:46:55 by csnowbal         ###   ########.fr       */
+/*   Created: 2019/11/08 12:27:56 by alkanaev          #+#    #+#             */
+/*   Updated: 2019/11/08 12:58:24 by alkanaev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-/*
-** Locates the first occurrence of 'c' in string 's' at lenght 'n'.
-*/
-
-void	*ft_memchr(const void *s, int c, size_t n)
+void	*ft_memchr(const void *smt, int sym, size_t len)
 {
-	unsigned char	*ptr;
-	unsigned char	sym;
+	size_t	i;
 
-	ptr = (unsigned char *)s;
-	sym = (unsigned char)c;
-	while (n--)
+	i = 0;
+	while (i < len)
 	{
-		if (*ptr == sym)
-			return (ptr);
-		ptr++;
+		if (((unsigned char *)smt)[i] == (unsigned char)sym)
+			return (&((unsigned char *)smt)[i]);
+		i++;
 	}
 	return (NULL);
 }

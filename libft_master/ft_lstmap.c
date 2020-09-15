@@ -3,42 +3,36 @@
 /*                                                        :::      ::::::::   */
 /*   ft_lstmap.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: csnowbal <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: alkanaev <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/04/30 12:51:58 by csnowbal          #+#    #+#             */
-/*   Updated: 2020/05/02 16:03:14 by csnowbal         ###   ########.fr       */
+/*   Created: 2019/11/25 12:45:25 by alkanaev          #+#    #+#             */
+/*   Updated: 2019/11/25 16:27:40 by alkanaev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-/*
-** Iterates the list ’lst’ and applies the function
-** ’f’ to the content of each element. Creates a new
-** list resulting of the successive applications of
-** the function ’f’. The ’del’ function is used to
-** delete the content of an element if needed.
-*/
-
-t_list	*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *))
+t_list	*ft_lstmap(t_list *list, void *(*f)(void *), void (*del)(void *))
 {
 	t_list	*new;
-	t_list	*cur_new;
-	t_list	*cur_old;
+	t_list	*dest;
+	t_list	*tmp;
 
-	if (!lst || !(new = ft_lstnew(f(lst->content))))
+	(void)del;
+	if (!list || !f)
 		return (NULL);
-	cur_new = new;
-	cur_old = lst->next;
-	while (cur_old)
+	if (!(new = ft_calloc(sizeof(t_list), 1)))
+		return (NULL);
+	new->content = f(list->content);
+	dest = new;
+	while (list->next)
 	{
-		if (!(cur_new->next = ft_lstnew(f(cur_old->content))))
-		{
-			ft_lstclear(&new, del);
+		list = list->next;
+		if (!(tmp = ft_calloc(sizeof(t_list), 1)))
 			return (NULL);
-		}
-		cur_new = cur_new->next;
-		cur_old = cur_old->next;
+		tmp->content = f(list->content);
+		dest->next = tmp;
+		dest = dest->next;
 	}
 	return (new);
 }

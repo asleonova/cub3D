@@ -3,35 +3,30 @@
 /*                                                        :::      ::::::::   */
 /*   ft_lstclear.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: csnowbal <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: alkanaev <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/04/30 12:52:09 by csnowbal          #+#    #+#             */
-/*   Updated: 2020/05/01 16:31:57 by csnowbal         ###   ########.fr       */
+/*   Created: 2019/11/25 12:42:37 by alkanaev          #+#    #+#             */
+/*   Updated: 2019/11/25 16:25:47 by alkanaev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-/*
-** Deletes and frees the given element and every
-** successor of that element, using the function ’del’ and free.
-** Finally, the pointer to the list must be set to NULL.
-*/
-
-void	ft_lstclear(t_list **lst, void (*del)(void*))
+void	ft_lstclear(t_list **lst, void (*del)(void *))
 {
-	t_list	*cur;
-	t_list	*seq;
+	t_list	*tmp;
+	t_list	*tmp2;
 
-	if (lst && *lst && del)
+	if (!lst || !*lst || !del)
+		return ;
+	tmp = *lst;
+	tmp2 = tmp;
+	while (tmp)
 	{
-		cur = *lst;
-		while (cur)
-		{
-			seq = cur->next;
-			ft_lstdelone(cur, del);
-			cur = seq;
-		}
-		*lst = NULL;
+		tmp2 = tmp->next;
+		(*del)((void *)tmp->content);
+		free(tmp);
+		tmp = tmp2;
 	}
+	*lst = NULL;
 }

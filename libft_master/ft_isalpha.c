@@ -3,20 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   ft_isalpha.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: csnowbal <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: alkanaev <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/04/30 12:52:28 by csnowbal          #+#    #+#             */
-/*   Updated: 2020/05/01 13:20:53 by csnowbal         ###   ########.fr       */
+/*   Created: 2019/11/13 14:55:58 by alkanaev          #+#    #+#             */
+/*   Updated: 2019/11/18 13:51:07 by alkanaev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-/*
-** Checks if the character is a letter.
-*/
-
-int	ft_isalpha(int c)
+int	ft_isalpha(int sym)
 {
-	return ((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z'));
+	if ((sym >= 65 && sym <= 90) || (sym >= 97 && sym <= 122))
+		return (1);
+	return (0);
 }

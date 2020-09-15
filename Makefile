@@ -15,8 +15,8 @@ HEADER = cub3d.h
 LIBFT = ./libft_master/libft.a
 LIBFT_DIR = ./libft_master
 SRCS = start.c \
-	./get_next_line/get_next_line.c \
-	./get_next_line/get_next_line_utils.c
+	get_next_line.c \
+	get_next_line_utils.c
 
 OBJS = $(SRCS:.c=.o)
 

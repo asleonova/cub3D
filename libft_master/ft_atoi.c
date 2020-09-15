@@ -3,39 +3,37 @@
 /*                                                        :::      ::::::::   */
 /*   ft_atoi.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: csnowbal <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: alkanaev <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/04/30 12:52:38 by csnowbal          #+#    #+#             */
-/*   Updated: 2020/05/03 16:48:04 by csnowbal         ###   ########.fr       */
+/*   Created: 2019/11/08 12:04:18 by alkanaev          #+#    #+#             */
+/*   Updated: 2019/11/18 13:49:09 by alkanaev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-/*
-** Converts start portion of a string to type int.
-*/
-
-int	ft_atoi(const char *nptr)
+int	ft_atoi(const char *str)
 {
-	int	res;
+	int	i;
+	int	num;
 	int	sign;
 
-	res = 0;
+	i = 0;
+	num = 0;
 	sign = 1;
-	while (*nptr == '\n' || *nptr == ' ' || *nptr == '\t' ||
-			*nptr == '\r' || *nptr == '\v' || *nptr == '\f')
-		nptr++;
-	if (*nptr == '+' || *nptr == '-')
+	while (str[i] == '\v' || str[i] == '\t' || str[i] == '\f'
+			|| str[i] == '\r' || str[i] == '\n' || str[i] == ' ')
+		i++;
+	if (str[i] == '+' || str[i] == '-')
 	{
-		if (*nptr == '-')
+		if (str[i] == '-')
 			sign = -1;
-		nptr++;
+		i++;
 	}
-	while (*nptr && *nptr >= '0' && *nptr <= '9')
+	while (str[i] && str[i] <= '9' && str[i] >= '0')
 	{
-		res = res * 10 + (*nptr - 48);
-		nptr++;
+		num = num * 10 + str[i] - '0';
+		i++;
 	}
-	return (res * sign);
+	return (num * sign);
 }

@@ -3,33 +3,32 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strmapi.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: csnowbal <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: alkanaev <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/04/30 12:50:56 by csnowbal          #+#    #+#             */
-/*   Updated: 2020/05/01 16:39:30 by csnowbal         ###   ########.fr       */
+/*   Created: 2019/11/08 12:44:42 by alkanaev          #+#    #+#             */
+/*   Updated: 2019/11/18 14:42:57 by alkanaev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-/*
-** Creates a fresh new string resulting from applying function 'f'
-** to each character of a string 's'.
-*/
-
 char	*ft_strmapi(char const *s, char (*f)(unsigned int, char))
 {
-	size_t	i;
-	char	*str;
+	char			*res;
+	unsigned int	i;
+	size_t			len;
 
-	if (!s || !(str = (char *)malloc(sizeof(*s) * ft_strlen(s) + 1)))
+	if (s == NULL || f == NULL)
 		return (NULL);
+	len = ft_strlen((char*)s);
+	if (!(res = (char *)malloc(sizeof(char) * (len + 1))))
+		return (NULL);
+	ft_bzero(res, len + 1);
 	i = 0;
-	while (s[i])
+	while (s[i] != '\0')
 	{
-		str[i] = f(i, s[i]);
+		res[i] = f(i, s[i]);
 		i++;
 	}
-	str[i] = '\0';
-	return (str);
+	return (res);
 }

@@ -3,28 +3,29 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strchr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: csnowbal <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: alkanaev <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/04/30 12:51:12 by csnowbal          #+#    #+#             */
-/*   Updated: 2020/05/03 18:29:07 by csnowbal         ###   ########.fr       */
+/*   Created: 2019/11/08 12:38:44 by alkanaev          #+#    #+#             */
+/*   Updated: 2019/11/18 13:46:08 by alkanaev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-/*
-** Searches for the first occurrence of the character 'c' in string 's'.
-*/
-
-char	*ft_strchr(const char *s, int c)
+char	*ft_strchr(const char *str, int sym)
 {
-	while (*s)
+	char	*s2;
+
+	s2 = (char*)str;
+	while (*s2)
 	{
-		if (*s == c)
-			return ((char *)s);
-		s++;
+		if (*s2 == sym)
+		{
+			return (s2);
+		}
+		s2++;
 	}
-	if (c == '\0')
-		return ((char *)s);
-	return (0);
+	if (*s2 == '\0' && sym == '\0')
+		return (s2);
+	return (NULL);
 }

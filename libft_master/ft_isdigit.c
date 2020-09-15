@@ -3,20 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   ft_isdigit.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: csnowbal <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: alkanaev <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/04/30 12:52:23 by csnowbal          #+#    #+#             */
-/*   Updated: 2020/05/01 13:22:41 by csnowbal         ###   ########.fr       */
+/*   Created: 2019/11/08 12:25:22 by alkanaev          #+#    #+#             */
+/*   Updated: 2019/11/18 13:55:58 by alkanaev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-/*
-** Checks if the character is a digit.
-*/
-
-int	ft_isdigit(int c)
+int	ft_isdigit(int sym)
 {
-	return (c >= '0' && c <= '9');
+	if (sym >= 48 && sym <= 57)
+		return (1);
+	return (0);
 }

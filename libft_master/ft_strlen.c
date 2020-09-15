@@ -3,25 +3,21 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strlen.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: csnowbal <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: alkanaev <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/04/30 12:50:58 by csnowbal          #+#    #+#             */
-/*   Updated: 2020/05/01 16:02:35 by csnowbal         ###   ########.fr       */
+/*   Created: 2019/11/08 12:42:22 by alkanaev          #+#    #+#             */
+/*   Updated: 2019/11/18 14:43:06 by alkanaev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-/*
-** Counts the length of a string.
-*/
-
 size_t	ft_strlen(const char *str)
 {
-	size_t	len;
+	size_t i;
 
-	len = 0;
-	while (*str++)
-		len++;
-	return (len);
+	i = 0;
+	while (str[i])
+		i++;
+	return (i);
 }

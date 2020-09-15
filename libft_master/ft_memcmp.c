@@ -3,36 +3,29 @@
 /*                                                        :::      ::::::::   */
 /*   ft_memcmp.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: csnowbal <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: alkanaev <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/04/30 12:51:44 by csnowbal          #+#    #+#             */
-/*   Updated: 2020/05/03 23:13:31 by csnowbal         ###   ########.fr       */
+/*   Created: 2019/11/08 12:32:30 by alkanaev          #+#    #+#             */
+/*   Updated: 2019/11/18 13:35:23 by alkanaev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-/*
-** Compares two arrays byte by byte. The comparison continues
-** until 'n' bytes are checked or until different bytes are encountered.
-** s1 = s2 -> 0
-** s1 > s2 -> +
-** s1 < s2 -> -
-*/
-
-int	ft_memcmp(const void *s1, const void *s2, size_t n)
+int	ft_memcmp(const void *smt1, const void *smt2, size_t len)
 {
-	unsigned char	*ptr_1;
-	unsigned char	*ptr_2;
+	size_t			i;
+	unsigned char	*ssmt1;
+	unsigned char	*ssmt2;
+	unsigned int	diff;
 
-	ptr_1 = (unsigned char *)s1;
-	ptr_2 = (unsigned char *)s2;
-	while (n--)
-	{
-		if (*ptr_1 != *ptr_2)
-			return (*ptr_1 - *ptr_2);
-		ptr_1++;
-		ptr_2++;
-	}
-	return (0);
+	i = 0;
+	ssmt1 = (unsigned char*)smt1;
+	ssmt2 = (unsigned char*)smt2;
+	if (len == 0)
+		return (0);
+	while (i < len - 1 && ssmt1[i] == ssmt2[i])
+		i++;
+	diff = ssmt1[i] - ssmt2[i];
+	return (diff);
 }

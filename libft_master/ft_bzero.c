@@ -3,26 +3,23 @@
 /*                                                        :::      ::::::::   */
 /*   ft_bzero.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: csnowbal <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: alkanaev <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/04/30 12:52:35 by csnowbal          #+#    #+#             */
-/*   Updated: 2020/05/03 09:53:33 by csnowbal         ###   ########.fr       */
+/*   Created: 2019/11/13 16:47:49 by alkanaev          #+#    #+#             */
+/*   Updated: 2019/11/18 12:28:55 by alkanaev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include <string.h>
 
-/*
-** Overwrites string bytes to zero bytes of length 'n'.
-*/
-
-void	ft_bzero(void *str, size_t len)
+void	ft_bzero(void *smt, size_t len)
 {
-	unsigned char	*ptr;
+	size_t	i;
 
-	if (!str)
-		return ;
-	ptr = (unsigned char *)str;
-	while (len--)
-		*ptr++ = '\0';
+	i = 0;
+	while (i < len)
+	{
+		((char *)smt)[i] = 0;
+		i++;
+	}
 }

@@ -1,23 +1,40 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   start.c                                            :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: dbliss <dbliss@student.42.fr>              +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/08/04 20:31:45 by dbliss            #+#    #+#             */
-/*   Updated: 2020/08/05 15:49:27 by dbliss           ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "cub3d.h"
-#include <stdlib.h>
 
-char	**make_map(t_list **head, int size)
+/*
+В общем это каркас как основая идея того, что я хотела
+
+int				param_validation(t_param *param, char *content)
+{
+if (*content == 0)
+		return (0);
+	else if (content[0] == 'R' && content[1] == ' ')
+		return ();
+	else if (content[0] == 'N' && content[1] == 'O' && content[1] == ' ')
+		return ();
+	else if (content[0] == 'S' && content[1] == 'O' && content[1] == ' ')
+		return ();
+	else if (content[0] == 'W' && content[1] == 'E' && content[1] == ' ')
+		return ();
+	else if (content[0] == 'E' && content[1] == 'A' && content[1] == ' ')
+		return ();
+	else if (content[0] == 'F' && content[1] == ' ')
+		return ();
+	else if (content[0] == 'C' && content[1] == ' ')
+		return ();
+	else if (content[0] == 'S' && content[1] == ' ')
+		return ();
+	else if (content[0] == '1'  && (content[1] == '1' || content[1] == '0')
+		return ();
+	else
+		return ("error-func");
+}
+*/
+
+char	**make_map(t_flags **head, int size)
 {
 	char **map;
 	int i;
-	t_list *tmp;
+	t_flags *tmp;
 
 	if (!(map = ft_calloc(size + 1, sizeof(char*)))) // created two-dimensional array of the map size
 		return (NULL); // error
@@ -39,7 +56,7 @@ int main (void)
 {
 	int fd;
 	char *line;
-	t_list *head;
+	t_flags *head;
 
 	line = NULL;
 	head = NULL;

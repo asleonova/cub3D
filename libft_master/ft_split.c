@@ -3,47 +3,91 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: csnowbal <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: alkanaev <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/04/30 12:51:18 by csnowbal          #+#    #+#             */
-/*   Updated: 2020/05/02 11:20:51 by csnowbal         ###   ########.fr       */
+/*   Created: 2019/11/08 12:38:11 by alkanaev          #+#    #+#             */
+/*   Updated: 2019/11/18 14:02:38 by alkanaev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-/*
-** Allocates and returns an array of “fresh” strings
-** (strings ending with ’\0’ and array ending with NULL)
-** obtained by spliting the string 's' with separator 'c'.
-** If the allocation fails the function returns NULL and clears memory.
-*/
-
-char	**ft_split(char const *s, char c)
+static int	find_sep(char ch, char sep)
 {
-	size_t	i;
-	size_t	j;
-	size_t	k;
-	char	**str;
+	if (sep == ch)
+		return (1);
+	return (0);
+}
+
+static int	count_non_sep(char *str, char sep)
+{
+	int	i;
+	int	counter;
 
 	i = 0;
-	k = 0;
-	if (!s || !(str = (char **)malloc(sizeof(char *) * (ft_countw(s, c) + 1))))
-		return (NULL);
-	while (i < ft_countw(s, c))
+	counter = 0;
+	while (str[i])
 	{
-		if (!(str[i] = (char *)malloc(sizeof(char) * (ft_lenw(&s[k], c) + 1))))
-		{
-			ft_free(str, k);
-			return (NULL);
-		}
-		j = 0;
-		while (s[k] == c)
-			k++;
-		while (s[k] != c && s[k])
-			str[i][j++] = s[k++];
-		str[i++][j] = '\0';
+		if (!(find_sep(str[i], sep)) && ((find_sep(str[i + 1], sep))
+					|| str[i + 1] == '\0'))
+			counter++;
+		i++;
 	}
-	str[i] = NULL;
-	return (str);
+	return (counter);
+}
+
+static int	len_non_sep(char *str, char sep)
+{
+	int	i;
+
+	i = 0;
+	while (!(find_sep(str[i], sep)) && str[i])
+		i++;
+	return (i);
+}
+
+static char	*modified_strdup(char const *str, char sep)
+{
+	int		i;
+	int		len;
+	char	*array;
+
+	len = len_non_sep((char*)str, sep);
+	if (!(array = (malloc(sizeof(char) * (len + 1)))))
+		return (NULL);
+	i = 0;
+	while (i < len)
+	{
+		array[i] = str[i];
+		i++;
+	}
+	array[i] = '\0';
+	return (array);
+}
+
+char		**ft_split(char const *s, char c)
+{
+	int		i;
+	int		j;
+	int		non_sep_cnt;
+	char	**result;
+
+	i = 0;
+	j = 0;
+	if (s == NULL)
+		return (NULL);
+	non_sep_cnt = count_non_sep((char*)s, c);
+	if (!(result = malloc(sizeof(char*) * non_sep_cnt + 1)))
+		return (NULL);
+	while (j < non_sep_cnt)
+	{
+		while (s[i] && (find_sep(s[i], c)))
+			i++;
+		result[j] = modified_strdup(&s[i], c);
+		while (s[i] && (!(find_sep(s[i], c))))
+			i++;
+		j++;
+	}
+	result[j] = NULL;
+	return (result);
 }

@@ -3,20 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   ft_isprint.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: csnowbal <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: alkanaev <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/04/30 12:52:21 by csnowbal          #+#    #+#             */
-/*   Updated: 2020/05/01 13:23:55 by csnowbal         ###   ########.fr       */
+/*   Created: 2019/11/08 12:25:52 by alkanaev          #+#    #+#             */
+/*   Updated: 2019/11/18 13:52:47 by alkanaev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-/*
-** Checks if the character is printable (including space).
-*/
-
-int	ft_isprint(int c)
+int	ft_isprint(int sym)
 {
-	return (c >= 32 && c <= 126);
+	if (sym >= 32 && sym <= 126)
+		return (1);
+	return (0);
 }

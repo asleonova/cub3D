@@ -3,22 +3,23 @@
 /*                                                        :::      ::::::::   */
 /*   ft_lstlast.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: csnowbal <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: alkanaev <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/04/30 12:52:00 by csnowbal          #+#    #+#             */
-/*   Updated: 2020/05/01 16:33:25 by csnowbal         ###   ########.fr       */
+/*   Created: 2019/11/25 12:45:53 by alkanaev          #+#    #+#             */
+/*   Updated: 2019/11/25 16:27:23 by alkanaev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-/*
-** Returns the last element of the list.
-*/
-
 t_list	*ft_lstlast(t_list *lst)
 {
-	while (lst && lst->next)
-		lst = lst->next;
-	return (lst);
+	t_list	*tmp;
+
+	if (!lst)
+		return (NULL);
+	tmp = lst;
+	while (tmp->next)
+		tmp = tmp->next;
+	return (tmp);
 }

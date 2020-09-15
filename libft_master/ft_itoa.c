@@ -3,42 +3,60 @@
 /*                                                        :::      ::::::::   */
 /*   ft_itoa.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: csnowbal <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: alkanaev <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/04/30 12:52:16 by csnowbal          #+#    #+#             */
-/*   Updated: 2020/05/01 16:30:03 by csnowbal         ###   ########.fr       */
+/*   Created: 2019/11/10 13:19:48 by alkanaev          #+#    #+#             */
+/*   Updated: 2019/11/18 14:03:25 by alkanaev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-/*
-** Converts the integer 'n' to the string equivalent.
-*/
-
-char	*ft_itoa(int n)
+static long	ft_len(long num)
 {
-	size_t	i;
-	size_t	size;
-	char	*str;
+	int	i;
 
 	i = 0;
-	if (n == -2147483648)
-		return (ft_strdup("-2147483648"));
-	size = ft_nbrlen(n, 10);
-	if (!(str = (char *)malloc(sizeof(char) * (size + 1))))
-		return (NULL);
-	str[size] = 0;
-	if (n < 0)
+	if (num == 0)
+		i++;
+	if (num < 0)
 	{
-		str[0] = '-';
-		n *= -1;
+		num = num * (-1);
 		i++;
 	}
-	while (i < size--)
+	while (num > 0)
 	{
-		str[size] = (n % 10) + 48;
-		n /= 10;
+		num = num / 10;
+		i++;
 	}
+	return (i);
+}
+
+char		*ft_itoa(int n)
+{
+	char	*str;
+	long	num;
+	int		len;
+
+	num = n;
+	len = ft_len(num) - 1;
+	str = NULL;
+	str = (char*)malloc(sizeof(char) * ft_len(num) + 1);
+	if (str == NULL)
+		return (NULL);
+	if (num == 0)
+		str[0] = '0';
+	if (num < 0)
+	{
+		str[0] = '-';
+		num = num * (-1);
+	}
+	while (num > 0)
+	{
+		str[len] = num % 10 + '0';
+		num = num / 10;
+		len--;
+	}
+	str[ft_len(n)] = '\0';
 	return (str);
 }

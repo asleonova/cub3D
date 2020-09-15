@@ -3,18 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ft_putchar_fd.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: csnowbal <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: alkanaev <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/04/30 12:51:30 by csnowbal          #+#    #+#             */
-/*   Updated: 2020/05/01 16:36:29 by csnowbal         ###   ########.fr       */
+/*   Created: 2019/11/08 12:36:46 by alkanaev          #+#    #+#             */
+/*   Updated: 2019/11/18 14:28:25 by alkanaev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
-
-/*
-** Outputs the char 'c' to the file descriptor 'fd'.
-*/
 
 void	ft_putchar_fd(char c, int fd)
 {
