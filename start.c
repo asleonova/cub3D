@@ -1,5 +1,15 @@
 #include "cub3d.h"
+#include <mlx.h>
 
+int     main(void)
+{
+    void    *mlx;
+    void    *mlx_win;
+
+    mlx = mlx_init();
+    mlx_win = mlx_new_window(mlx, 1920, 1080, "Hello world!");
+    mlx_loop(mlx);
+}  
 /*
 В общем это каркас как основая идея того, что я хотела
 
@@ -30,7 +40,7 @@ if (*content == 0)
 }
 */
 
-void	ft_bzero(void *smt, size_t len)
+/*void	ft_bzero(void *smt, size_t len)
 {
 	size_t	i;
 
@@ -157,3 +167,4 @@ int main (void)
 		return (-1); // error
 	return (0);
 }
+*/

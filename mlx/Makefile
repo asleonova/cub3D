@@ -11,7 +11,8 @@ C_SRC= mlx_xpm.c mlx_png.c mlx_string_put.c
 C_OBJ=$(C_SRC:.c=.o)
 CFLAGS=-O3
 
-NAME=libmlx.dylib
+# NAME=libmlx.dylib
+NAME=libmlx.a
 
 INC=-I.
 #OPTI=-Ounchecked

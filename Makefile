@@ -6,34 +6,46 @@
 #    By: dbliss <dbliss@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/08/05 12:46:16 by dbliss            #+#    #+#              #
-#    Updated: 2020/08/05 13:57:28 by dbliss           ###   ########.fr        #
+#    Updated: 2020/09/16 17:29:50 by dbliss           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = cub3D
+
 HEADER = cub3d.h
-LIBFT = ./libft_master/libft.a
-LIBFT_DIR = ./libft_master
-SRCS = start.c \
-	get_next_line.c \
-	get_next_line_utils.c
+
+SRCS = start.c
 
 OBJS = $(SRCS:.c=.o)
 
-%.o: %.c $(HEADER)
-		gcc -c -Wall -Wextra -Werror $< -o $@ 
+CC = gcc
+
+CFLAGS = -Wall -Wextra -Werror -c -g
+
+LIBFT_ARC = libft/libft.a
+MLX_ARC = mlx/libmlx.a
+
 		
 all: $(NAME)
 
-$(NAME): $(OBJS)
-		$(MAKE) -C $(LIBFT_DIR)
-		cp $(LIBFT) $(NAME)
-		ar rc $(NAME) $(OBJS)
-clean:
-		rm -f $(OBJS)
-fclean: 
-		rm -f $(NAME)
+$(NAME): $(OBJS) $(LIBFT_ARC) $(MLX_ARC)
+	$(CC) -Lmlx -lmlx -framework OpenGL -framework AppKit -Llibft -lft $(OBJS) -o $(NAME)
 
+%.o: %.c $(HEADER)
+	$(CC) $(CFLAGS) -Imlx -Ilibft $< -o $@
+
+$(LIBFT_ARC):
+	make -C libft
+
+$(MLX_ARC):
+	make -C mlx
+
+clean:
+	make clean -C libft
+	rm -f $(OBJS)
+fclean: clean
+	make fclean -C libft
+	rm -f $(NAME)
 re: fclean all
 
 .PHONY: all clean fclean re
