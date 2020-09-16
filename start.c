@@ -30,6 +30,92 @@ if (*content == 0)
 }
 */
 
+void	ft_bzero(void *smt, size_t len)
+{
+	size_t	i;
+
+	i = 0;
+	while (i < len)
+	{
+		((char *)smt)[i] = 0;
+		i++;
+	}
+}
+
+void	*ft_calloc(size_t num, size_t size)
+{
+	size_t			i;
+	unsigned char	*res;
+
+	i = 0;
+	if (!(res = (unsigned char *)malloc(size * num)))
+		return (NULL);
+	ft_bzero(res, size * num);
+	if (num == 0 || size == 0)
+		return ((void*)res);
+	return(res);
+}
+
+int	ft_lstsize(t_list *lst)
+{
+	int		cnt;
+	t_list	*tmp;
+
+	cnt = 0;
+	tmp = lst;
+	while (tmp)
+	{
+		cnt++;
+		tmp = tmp->next;
+	}
+	return (cnt);
+}
+
+void	ft_lstadd_back(t_list **lst, t_list *new)
+{
+	t_list	*tmp;
+
+	if (!lst || !new)
+		return ;
+	if (!*lst)
+	{
+		*lst = new;
+		return ;
+	}
+	tmp = *lst;
+	while (tmp->next)
+		tmp = tmp->next;
+	tmp->next = new;
+}
+
+t_list	*ft_lstnew(void *content)
+{
+	t_list	*new;
+
+	if (!(new = malloc(sizeof(t_list))))
+		return (NULL);
+	new->content = content;
+	new->next = NULL;
+	return (new);
+}
+
+void	ft_putchar_fd(char c, int fd)
+{
+	write(fd, &c, 1);
+}
+
+void	ft_putstr_fd(char *s, int fd)
+{
+	if (s)
+		write(fd, s, ft_strlen(s));
+}
+
+void	ft_putendl_fd(char *s, int fd)
+{
+	ft_putstr_fd(s, fd);
+	ft_putchar_fd('\n', fd);
+}
+
 char	**make_map(t_flags **head, int size)
 {
 	char **map;
