@@ -17,19 +17,78 @@ void            my_mlx_pixel_put(t_data *data, int x, int y, int color)
     *(unsigned int*)dst = color;
 }
 
+// void draw_cub(t_data *data, int x, int y)
+// {
+//     int i = 0;
+//     int j = 0;
+//     while (i <= 32)
+//     {
+//         j = 0;
+//         while (j <= 32)
+//         {
+//             my_mlx_pixel_put(data, x + i, y + j, 0x000000FF);
+//             j++;
+//         }
+//         i++;
+//     }
+// }
+
 int             main(void)
-{
+{ 
     void    *mlx;
     void    *mlx_win;
     t_data  img;
+	int x;
+	int y = 0;
+	int map_x = 8;
+	int map_y = 8;
+	//int map_s = 64;
+	int map[] =
+	{
+		1, 1, 1, 1, 1, 1, 1, 1,
+		1, 0, 1, 0, 0, 0, 0, 1,
+		1, 0, 1, 0, 0, 0, 0, 1,
+		1, 0, 1, 0, 0, 0, 0, 1,
+		1, 0, 0, 0, 0, 0, 0, 1,
+		1, 0, 0, 0, 0, 1, 0, 1,
+		1, 0, 0, 0, 0, 0, 0, 1,
+		1, 1, 1, 1, 1, 1, 1, 1,
+	};
+
 
     mlx = mlx_init();
     mlx_win = mlx_new_window(mlx, 500, 500, "Hello world!");
-    img.img = mlx_new_image(mlx, 500, 500);
-    img.addr = mlx_get_data_addr(img.img, &img.bits_per_pixel, &img.line_length,
-                                 &img.endian);
-    my_mlx_pixel_put(&img, 5, 5, 0x00FF0000);
-    mlx_put_image_to_window(mlx, mlx_win, img.img, 0, 0);
+	img.img = mlx_new_image(mlx, 500, 500);
+	img.addr = mlx_get_data_addr(img.img, &img.bits_per_pixel, &img.line_length,
+                                  &img.endian);
+	// while (y++ < 200)
+	// {
+	// 	x = 100;
+	// 	while(x++ < 200)
+	// 		my_mlx_pixel_put(&img, x, y, 0x00FF0000);
+	// 		mlx_put_image_to_window(mlx, mlx_win, img.img, 0, 0);
+	// }
+
+	while (y < map_y)
+	{
+		x = 0;
+		while (x < map_y)
+		{
+			if (map[y * map_x + x] == 1)
+			{
+				my_mlx_pixel_put(&img, x, y, 0x000000FF);
+				mlx_put_image_to_window(mlx, mlx_win, img.img, 0, 0);
+			}
+			else
+			{
+				my_mlx_pixel_put(&img, x, y, 0x00FF0000);
+				mlx_put_image_to_window(mlx, mlx_win, img.img, 0, 0);
+			}
+			
+			x++;
+		}
+		y++;
+	}
     mlx_loop(mlx);
 }
 /*
