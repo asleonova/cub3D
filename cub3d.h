@@ -6,7 +6,7 @@
 /*   By: dbliss <dbliss@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/05 13:26:35 by dbliss            #+#    #+#             */
-/*   Updated: 2020/09/16 17:04:04 by dbliss           ###   ########.fr       */
+/*   Updated: 2020/09/17 20:16:32 by dbliss           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,28 @@ typedef struct	s_flags
     char		*content;
     char        *next;
 }				t_flags;
+
+typedef struct s_data
+{
+    char *map; // карта
+    int resolution_x; // разрешение экрана
+    int resolution_y; // разрешение экрана
+    int coordinates_x; // текущие координаты по X
+    int coordinates_y; // текущие координаты по Y
+    double vector;
+    int cub_x;
+    int cub_y;
+    void *img;
+    char *addr;
+    int bits_per_pixel;
+    int line_length;
+    int endian;
+    void *mlx;
+    void *win;
+    void *mlx_win;
+
+}       t_data;
+
 
 /*
 Пока закомментирую, так как код с этой структурой удалила - надо переработать.

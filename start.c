@@ -1,13 +1,14 @@
 #include "cub3d.h"
 #include <mlx.h>
 
-typedef struct  s_data {
-    void        *img;
-    char        *addr;
-    int         bits_per_pixel;
-    int         line_length;
-    int         endian;
-}               t_data;
+#define SCALE 20
+// typedef struct  s_data {
+//     void        *img;
+//     char        *addr;
+//     int         bits_per_pixel;
+//     int         line_length;
+//     int         endian;
+// }               t_data;
 
 void            my_mlx_pixel_put(t_data *data, int x, int y, int color)
 {
@@ -17,21 +18,33 @@ void            my_mlx_pixel_put(t_data *data, int x, int y, int color)
     *(unsigned int*)dst = color;
 }
 
-// void draw_cub(t_data *data, int x, int y)
-// {
-//     int i = 0;
-//     int j = 0;
-//     while (i <= 32)
-//     {
-//         j = 0;
-//         while (j <= 32)
-//         {
-//             my_mlx_pixel_put(data, x + i, y + j, 0x000000FF);
-//             j++;
-//         }
-//         i++;
-//     }
-// }
+void draw_cub(t_data *data, int x, int y)
+{
+    int i = 0;
+    int j = 0;
+    while (i <= 32)
+    {
+        j = 0;
+        while (j <= 32)
+        {
+            my_mlx_pixel_put(data, x + i, y + j, 0x000000FF);
+            j++;
+        }
+        i++;
+    }
+}
+
+void draw_map(t_data *data)
+{
+    int i = 0;
+    while(i < 5)
+    {
+        draw_cub(data, data->cub_x, data->cub_y);
+        data->cub_x += 32;
+        i++;
+    }
+   // draw_player(data);
+}
 
 int             main(void)
 { 
@@ -69,19 +82,22 @@ int             main(void)
 	// 		mlx_put_image_to_window(mlx, mlx_win, img.img, 0, 0);
 	// }
 
-	while (y < map_y)
+	while (y/SCALE < map_y)
 	{
 		x = 0;
-		while (x < map_y)
+		while (x/SCALE < map_x)
 		{
-			if (map[y * map_x + x] == 1)
+			// if (map[y * map_x + x] == 1)
+			if (map[y/SCALE * map_x + x/SCALE] == 1)
 			{
-				my_mlx_pixel_put(&img, x, y, 0x000000FF);
+				my_mlx_pixel_put(&img, x + 1, y, 0x000000FF);
+				//draw_cub(&img, x, y);
+				//draw_map(&img);
 				mlx_put_image_to_window(mlx, mlx_win, img.img, 0, 0);
 			}
 			else
 			{
-				my_mlx_pixel_put(&img, x, y, 0x00FF0000);
+				my_mlx_pixel_put(&img, x + 1, y, 0x00FF0000);
 				mlx_put_image_to_window(mlx, mlx_win, img.img, 0, 0);
 			}
 			
