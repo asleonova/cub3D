@@ -2,6 +2,24 @@
 #include <mlx.h>
 
 #define SCALE 20
+
+	int x;
+	t_data  img;
+	int y;
+	int map_x = 8;
+	int map_y = 8;
+	int map[] =
+	{
+		1, 1, 1, 0, 1, 1, 1, 1,
+		1, 0, 1, 0, 0, 0, 0, 1,
+		1, 0, 1, 0, 0, 0, 0, 1,
+		1, 0, 1, 0, 0, 0, 0, 1,
+		1, 0, 0, 0, 0, 0, 0, 1,
+		1, 0, 0, 2, 0, 1, 0, 1,
+		1, 0, 0, 0, 0, 0, 0, 1,
+		1, 1, 1, 1, 1, 1, 1, 1,
+	};
+
 // typedef struct  s_data {
 //     void        *img;
 //     char        *addr;
@@ -18,96 +36,81 @@ void            my_mlx_pixel_put(t_data *data, int x, int y, int color)
     *(unsigned int*)dst = color;
 }
 
-void draw_cub(t_data *data, int x, int y)
+void	draw_player()
 {
-    int i = 0;
-    int j = 0;
-    while (i <= 32)
-    {
-        j = 0;
-        while (j <= 32)
-        {
-            my_mlx_pixel_put(data, x + i, y + j, 0x000000FF);
-            j++;
-        }
-        i++;
-    }
-}
-
-void draw_map(t_data *data)
-{
-    int i = 0;
-    while(i < 5)
-    {
-        draw_cub(data, data->cub_x, data->cub_y);
-        data->cub_x += 32;
-        i++;
-    }
-   // draw_player(data);
-}
-
-int             main(void)
-{ 
-    void    *mlx;
-    void    *mlx_win;
-    t_data  img;
-	int x;
-	int y = 0;
-	int map_x = 8;
-	int map_y = 8;
-	//int map_s = 64;
-	int map[] =
-	{
-		1, 1, 1, 1, 1, 1, 1, 1,
-		1, 0, 1, 0, 0, 0, 0, 1,
-		1, 0, 1, 0, 0, 0, 0, 1,
-		1, 0, 1, 0, 0, 0, 0, 1,
-		1, 0, 0, 0, 0, 0, 0, 1,
-		1, 0, 0, 0, 0, 1, 0, 1,
-		1, 0, 0, 0, 0, 0, 0, 1,
-		1, 1, 1, 1, 1, 1, 1, 1,
-	};
-
-
-    mlx = mlx_init();
-    mlx_win = mlx_new_window(mlx, 500, 500, "Hello world!");
-	img.img = mlx_new_image(mlx, 500, 500);
-	img.addr = mlx_get_data_addr(img.img, &img.bits_per_pixel, &img.line_length,
-                                  &img.endian);
-	// while (y++ < 200)
-	// {
-	// 	x = 100;
-	// 	while(x++ < 200)
-	// 		my_mlx_pixel_put(&img, x, y, 0x00FF0000);
-	// 		mlx_put_image_to_window(mlx, mlx_win, img.img, 0, 0);
-	// }
-
+	y = 0;
 	while (y/SCALE < map_y)
 	{
 		x = 0;
 		while (x/SCALE < map_x)
 		{
-			// if (map[y * map_x + x] == 1)
-			if (map[y/SCALE * map_x + x/SCALE] == 1)
+			if (map[y/SCALE * map_x + x/SCALE] != 1 && map[y/SCALE * map_x + x/SCALE] != 0)
 			{
-				my_mlx_pixel_put(&img, x + 1, y, 0x000000FF);
-				//draw_cub(&img, x, y);
-				//draw_map(&img);
-				mlx_put_image_to_window(mlx, mlx_win, img.img, 0, 0);
-			}
-			else
-			{
-				my_mlx_pixel_put(&img, x + 1, y, 0x00FF0000);
-				mlx_put_image_to_window(mlx, mlx_win, img.img, 0, 0);
+				my_mlx_pixel_put(&img, x, y, 0x008000);
 			}
 			
 			x++;
 		}
 		y++;
 	}
-    mlx_loop(mlx);
 }
-/*
+
+void control_player(int keycode)
+{
+    // if(keycode == 53)
+    //     mlx_destroy_window(data->mlx, data->win);
+    else if(keycode == 0)
+        x -= 20;
+    else if(keycode == 1)
+        y += 20;
+    else if(keycode == 2)
+        x += 20;
+    else if(keycode == 13 && x >= 20)
+       y -= 20;
+    // else if(keycode == 126 || keycode == 124)
+    //     data->vector += 5;
+    // else if(keycode == 125 || keycode == 123)
+    //     data->vector -=5;
+    // printf("%d-%d-%d-%f\n", keycode, data->coordinates_x, data->coordinates_y, data->vector);
+    draw_player();
+}
+
+int             main(void)
+{ 
+    void    *mlx;
+    void    *mlx_win;
+
+    mlx = mlx_init();
+    mlx_win = mlx_new_window(mlx, 500, 600, "Hello world!");
+	img.img = mlx_new_image(mlx, 500, 600);
+	img.addr = mlx_get_data_addr(img.img, &img.bits_per_pixel, &img.line_length,
+                                  &img.endian);
+	y = 0;
+	while (y/SCALE < map_y)
+	{
+		x = 0;
+		while (x/SCALE < map_x)
+		{
+			if (map[y/SCALE * map_x + x/SCALE] == 1)
+			{
+				my_mlx_pixel_put(&img, x, y, 0x000000FF);
+			// mlx_put_image_to_window(mlx, mlx_win, img.img, 0, 0);
+			}
+			// else if (map[y/SCALE * map_x + x/SCALE] == 0)
+			// {
+			// 	//my_mlx_pixel_put(&img, x + 1, y, 0x00FF0000);
+			// 	mlx_put_image_to_window(mlx, mlx_win, img.img, 0, 0);
+			// }
+			x++;
+		}
+		y++;
+	}
+	mlx_put_image_to_window(mlx, mlx_win, img.img, 0, 0);
+	// draw_player();
+	control_player
+	mlx_loop(mlx);
+}
+/*./c
 В общем это каркас как основая идея того, что я хотела
 
 int				param_validation(t_param *param, char *content)
