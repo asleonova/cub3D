@@ -6,7 +6,7 @@
 /*   By: dbliss <dbliss@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/05 13:26:35 by dbliss            #+#    #+#             */
-/*   Updated: 2020/09/17 20:16:32 by dbliss           ###   ########.fr       */
+/*   Updated: 2020/09/22 16:05:30 by dbliss           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,12 +16,21 @@
 #include <stdlib.h>
 #include <fcntl.h>
 
+#define W 13
+#define ESC 53
+
 typedef struct	s_flags
 {
 	char		**head;
     char		*content;
     char        *next;
 }				t_flags;
+
+typedef struct  s_player {
+    
+	int x;
+	int y;
+}               t_player;
 
 typedef struct s_data
 {
@@ -39,10 +48,15 @@ typedef struct s_data
     int line_length;
     int endian;
     void *mlx;
-    void *win;
     void *mlx_win;
 
 }       t_data;
+
+typedef struct  s_all
+{
+    t_data  *data;
+    t_player *player;
+}               t_all;
 
 
 /*
