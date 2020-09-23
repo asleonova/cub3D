@@ -46,7 +46,7 @@ int             main(void)
 		{
 			if (map[y/SCALE * map_x + x/SCALE] == 1)
 			{
-				my_mlx_pixel_put(&img, x, y, 0x000000FF);
+				my_mlx_pixel_put(c);
 			}
 			x++;
 		}

@@ -6,7 +6,7 @@
 /*   By: dbliss <dbliss@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/05 13:26:35 by dbliss            #+#    #+#             */
-/*   Updated: 2020/09/22 16:05:30 by dbliss           ###   ########.fr       */
+/*   Updated: 2020/09/23 15:11:46 by dbliss           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,14 +17,18 @@
 #include <fcntl.h>
 
 #define W 13
+#define A 0
+#define S 1
+#define D 2
 #define ESC 53
+#define SCALE 64
 
-typedef struct	s_flags
-{
-	char		**head;
-    char		*content;
-    char        *next;
-}				t_flags;
+// typedef struct	s_flags
+// {
+// 	char		**head;
+//     char		*content;
+//     char        *next;
+// }				t_flags;
 
 typedef struct  s_player {
     
@@ -32,16 +36,21 @@ typedef struct  s_player {
 	int y;
 }               t_player;
 
+typedef struct  s_map {
+    
+	int x;
+	int y;
+}               t_map;
+
 typedef struct s_data
 {
-    char *map; // карта
-    int resolution_x; // разрешение экрана
-    int resolution_y; // разрешение экрана
-    int coordinates_x; // текущие координаты по X
-    int coordinates_y; // текущие координаты по Y
-    double vector;
-    int cub_x;
-    int cub_y;
+    //int resolution_x; // разрешение экрана
+    //int resolution_y; // разрешение экрана
+    //int coordinates_x; // текущие координаты по X
+    //int coordinates_y; // текущие координаты по Y
+    //double vector;
+    //int cub_x;
+    //int cub_y;
     void *img;
     char *addr;
     int bits_per_pixel;
@@ -54,8 +63,9 @@ typedef struct s_data
 
 typedef struct  s_all
 {
-    t_data  *data;
-    t_player *player;
+    t_data  data;
+    t_player player;
+    t_map   map;
 }               t_all;
 
 
@@ -75,6 +85,6 @@ typedef struct	s_param
 }				t_param;
 */
 
-char    **make_map(t_flags **head, int size);
+//char    **make_map(t_flags **head, int size);
 
 #endif
