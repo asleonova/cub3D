@@ -6,7 +6,7 @@
 /*   By: dbliss <dbliss@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/05 13:26:35 by dbliss            #+#    #+#             */
-/*   Updated: 2020/09/23 15:11:46 by dbliss           ###   ########.fr       */
+/*   Updated: 2020/09/24 17:43:01 by dbliss           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@
 #define D 2
 #define ESC 53
 #define SCALE 64
+#define PI 3.1415926535
 
 // typedef struct	s_flags
 // {
@@ -31,9 +32,14 @@
 // }				t_flags;
 
 typedef struct  s_player {
-    
-	int x;
-	int y;
+
+    float start;
+    float end;
+	float x;
+	float y;
+    float dx; // delta x (конечная разность) or maybe it's a direction????
+    float dy; // delta y
+    float pa; // player's angle
 }               t_player;
 
 typedef struct  s_map {
