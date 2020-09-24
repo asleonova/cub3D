@@ -2,6 +2,7 @@
 #include <mlx.h>
 #include "../libft/libft.h" 
 #include <stdio.h>
+# include <math.h>
 
 
 	int map_x = 8;
@@ -44,15 +45,23 @@ void	draw_player(t_all *all)
 	// 		{
 	// 			all->player.x = all->map.x - 32;
 	// 			all->player.y = all->map.y - 32;
-			my_mlx_pixel_put(&all->data, all->player.x, all->player.y, 0x00FF0000);
+			//my_mlx_pixel_put(&all->data, all->player.x, all->player.y, 0x00FF0000);
 	// 		}
 			
 	// 		all->map.x++;
 	// 	}
 	// 	all->map.y++;
 	// }
-	printf("%d\n", all->player.x);
-	printf("%d\n", all->player.y);
+	/*while (map_int[(int)all->player.y/SCALE * map_x + (int)all->player.x/SCALE] == 0)
+		{
+			all->player.x += cos(all->player.dir);
+			all->player.y += sin(all->player.dir);
+			my_mlx_pixel_put(&all->data, all->player.x, all->player.y, 0x00FF0000);
+		}	
+	printf("%f\n", all->player.x);
+	printf("%f\n", all->player.y);
+	*/
+	my_mlx_pixel_put(&all->data, all->player.x, all->player.y, 0x00FF0000);
 }
 
 int control_player(int keycode, t_all *all)

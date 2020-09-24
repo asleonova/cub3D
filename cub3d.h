@@ -6,7 +6,7 @@
 /*   By: dbliss <dbliss@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/05 13:26:35 by dbliss            #+#    #+#             */
-/*   Updated: 2020/09/24 17:43:01 by dbliss           ###   ########.fr       */
+/*   Updated: 2020/09/24 18:20:20 by dbliss           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ typedef struct  s_player {
     float dx; // delta x (конечная разность) or maybe it's a direction????
     float dy; // delta y
     float pa; // player's angle
+    float dir;
 }               t_player;
 
 typedef struct  s_map {

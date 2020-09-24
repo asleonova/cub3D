@@ -33,26 +33,27 @@ void	draw_player(t_all *all)
 	//all->player.end = all->player.pa + M_PI_4;
 	//while (all->player.start < all->player.end)
 	//{
-		//if (map_int[(int)all->player.y/SCALE * map_x + (int)all->player.x/SCALE] == 0)
-		//{
-			//all->player.x += cos(all->player.start);
-			//all->player.y += sin(all->player.start);
-			//my_mlx_pixel_put(&all->data, all->player.x, all->player.y, 0x00FF0000);
-		//}		
-	//}
+		while (map_int[(int)all->player.y/SCALE * map_x + (int)all->player.x/SCALE] == 0)
+		{
+			all->player.x += cos(all->player.dir);
+			all->player.y += sin(all->player.dir);
+			my_mlx_pixel_put(&all->data, all->player.x, all->player.y, 0x00FF0000);
+		}		
+	}
 	//all->player.start += M_PI_2 / 640;
-	my_mlx_pixel_put(&all->data, all->player.x, all->player.y, 0x00FF0000);
+	/*my_mlx_pixel_put(&all->data, all->player.x, all->player.y, 0x00FF0000);
 	float c = 0;
 	for (; c<20; c+=.05) {
     float x = all->player.x + c*cos(all->player.pa);
     float y = all->player.y + c*sin(all->player.pa);
     if (map_int[(int)x + (int)y*map_x] == 1)
 		break;
-}
+		*/
+//}
 
-	printf("%f\n", all->player.x);
-	printf("%f\n", all->player.y);
-}
+	//printf("%f\n", all->player.x);
+	//printf("%f\n", all->player.y);
+//}
 
 void	draw_map(t_all *all)
 {
@@ -113,7 +114,7 @@ float degToRad(int a)
 { 
 	return (a*M_PI/180.0);
 }
-int control_player(int keycode, t_all *all)
+/*int control_player(int keycode, t_all *all)
 {
      if(keycode == ESC)
          mlx_destroy_window(all->data.mlx, all->data.mlx_win);
@@ -149,7 +150,28 @@ int control_player(int keycode, t_all *all)
     //     data->vector -=5;
 	return (0);
 }
+*/
 
+
+int control_player(int keycode, t_all *all)
+{
+     if(keycode == ESC)
+         mlx_destroy_window(all->data.mlx, all->data.mlx_win);
+    else if(keycode == A)
+        all->player.x -= 5;
+    else if(keycode == S)
+        all->player.y += 5;
+    else if(keycode == D)
+        all->player.x += 5;
+    else if(keycode == W)
+       all->player.y -= 5;
+	printf("%d\n", keycode);
+    // else if(keycode == 126 || keycode == 124)
+    //     data->vector += 5;
+    // else if(keycode == 125 || keycode == 123)
+    //     data->vector -=5;
+	return (1);
+}
 int             main(void)
 { 
 	
@@ -164,6 +186,7 @@ int             main(void)
 	all.player.x = 300;
 	all.player.y = 300;
 	all.player.pa = 90;
+	all.player.dir = 3 * M_PI_2;
 	all.player.dx=cos(degToRad(all.player.pa)); 
 	all.player.dy=-sin(degToRad(all.player.pa)); 
 
