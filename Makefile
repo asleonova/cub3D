@@ -14,7 +14,7 @@ NAME = cub3D
 
 HEADER = cub3d.h
 
-SRCS = prog_3.c
+SRCS = prog_4.c
 
 OBJS = $(SRCS:.c=.o)
 

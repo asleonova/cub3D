@@ -1,8 +1,6 @@
 #include "cub3d.h"
 #include <mlx.h>
 
-#define SCALE 20
-
 	int x;
 	t_data  img;
 	int y;
@@ -34,8 +32,8 @@ int             main(void)
     void    *mlx_win;
 
     mlx = mlx_init();
-    mlx_win = mlx_new_window(mlx, 500, 600, "Hello world!");
-	img.img = mlx_new_image(mlx, 500, 600);
+    mlx_win = mlx_new_window(mlx, 1200, 800, "Hello world!");
+	img.img = mlx_new_image(mlx, 1200, 800);
 	img.addr = mlx_get_data_addr(img.img, &img.bits_per_pixel, &img.line_length,
                                   &img.endian);
 	y = 0;
@@ -46,7 +44,7 @@ int             main(void)
 		{
 			if (map[y/SCALE * map_x + x/SCALE] == 1)
 			{
-				my_mlx_pixel_put(c);
+				my_mlx_pixel_put(&img, x, y, 0x000000FF);
 			}
 			x++;
 		}
