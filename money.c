@@ -14,8 +14,11 @@ void draw_cub(t_data *data, int x, int y)
         j = 0;
         while (j <= 32)
         {
-            my_mlx_pixel_put(data, x + i, y + j, 0x000000FF);
-            j++;
+            if (j == 32)
+            {   
+                my_mlx_pixel_put(data, x + i, y + j, 0x000000FF);
+                j++;
+            }
         }
         i++;
     }
