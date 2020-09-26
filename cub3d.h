@@ -6,7 +6,7 @@
 /*   By: dbliss <dbliss@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/05 13:26:35 by dbliss            #+#    #+#             */
-/*   Updated: 2020/09/25 18:04:08 by dbliss           ###   ########.fr       */
+/*   Updated: 2020/09/26 23:24:37 by dbliss           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,16 +47,21 @@ typedef   struct s_cross {
     float hy;
     float vx;
     float vy;
-    float h_dy; // delta по y
-    float h_dx;
-    float v_dy;
-    float v_dx;
+    float h_dy; // смещение по y
+    float h_dx; // смещение по x
+    float v_dy; // cмещение по y
+    float v_dx; // смещение по x
+    float h_distance;
+    float v_distance;
 }                t_cross;
 
 typedef struct  s_map {
     
 	int x;
 	int y;
+    int mx;
+    int my;
+    int mp;
 }               t_map;
 
 typedef struct s_data

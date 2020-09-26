@@ -30,14 +30,21 @@ void 	horizontal_cross(t_all *all)
 	{
 		all->cross.hy = (int)(all->player.y / SCALE) * SCALE - 1;
 		all->cross.h_dy = -SCALE;
+		all->cross.hx = all->player.x + (all->player.y - all->cross.hy) / tan(all->player.dir);
+		all->cross.h_dx = SCALE/tan(all->player.dir);
 	}
-	else
+	if (all->player.dir < 0 && all->player.dir > -M_PI) // the ray looking down
 	{
 		all->cross.hy = (int)(all->player.y / SCALE) * SCALE + SCALE;
 		all->cross.h_dy = SCALE;
+		all->cross.hx = all->player.x + (all->player.y - all->cross.hy) / tan(all->player.dir);
+		all->cross.h_dx = SCALE/tan(all->player.dir);
 	}
-	all->cross.hx = all->player.x + (all->player.y - all->cross.hy) / tan(all->player.dir);
-	all->cross.h_dx = SCALE/tan(all->player.dir);
+	if (all->player.dir == 0 || all->player.dir == M_PI) // looking straight left or right (*it will never hit the horiz line)
+	{
+		all->cross.hy = all->player.y;
+		all->cross.hx = all->player.x;
+	}
 	my_mlx_pixel_put(&all->data, all->cross.hx, all->cross.hy, 0x00FF00);
 }
 
@@ -47,17 +54,58 @@ void	vertical_cross(t_all *all)
 	{
 		all->cross.vx = (int)(all->player.x / SCALE) * SCALE - 1;
 		all->cross.v_dx = -SCALE;
+		all->cross.vy = all->player.y + (all->player.x - all->cross.vx) * tan(all->player.dir);
+		all->cross.v_dy = SCALE * tan(all->player.dir);
 	}
-	else // the ray looking right
+	if (all->player.dir > -M_PI_2 && all->player.dir < M_PI_2) // the ray looking right
 	{	
 		all->cross.vx = (int)(all->player.x / SCALE) * SCALE + SCALE;
 		all->cross.v_dx = SCALE;
+		all->cross.vy = all->player.y + (all->player.x - all->cross.vx) * tan(all->player.dir);
+		all->cross.v_dy = SCALE * tan(all->player.dir);
 	}
-	all->cross.vy = all->player.y + (all->player.x - all->cross.vx) * tan(all->player.dir);
-	all->cross.v_dy = SCALE * tan(all->player.dir);
+	if (all->player.dir == 0 || all->player.dir == M_PI) // looking straight left or right (*it will never hit the horiz line)
+	{
+		all->cross.hy = all->player.y;
+		all->cross.hx = all->player.x;
+	}
 	my_mlx_pixel_put(&all->data, all->cross.vx, all->cross.vy, 0xFFA500);
 }
 
+void	cast_ray(t_all *all)
+{
+	// проверка на пересечение со стенкой
+	if (map_int[(int)all->cross.hx / SCALE][(int)all->cross.hy / SCALE] != 1) // no wall, add the delta
+	{
+		all->cross.hx += all->cross.h_dx;
+	 	all->cross.hy += all->cross.h_dy;
+		all->cross.vx += all->cross.v_dx;
+	 	all->cross.vy += all->cross.v_dy;
+	}
+	else // if the wall - calculate the distance
+	{
+		float pow_hx = pow((all->player.x - all->cross.h_dx), 2);
+		float pow_hy = pow((all->player.y - all->cross.h_dy), 2);
+		all->cross.h_distance = sqrt(pow_hx + pow_hy);
+		float pow_vx = pow((all->player.x - all->cross.v_dx), 2);
+		float pow_vy = pow((all->player.y - all->cross.v_dy), 2);
+		all->cross.v_distance = sqrt(pow_vx + pow_vy);
+	}
+}
+// void	draw_ray(t_all *all)
+// {
+// 	all->player.start = all->player.dir - (M_PI_4);
+// 	all->player.end = all->player.dir + (M_PI_4);
+// 	while (all->player.start <= all->player.end)
+// 	{
+// 		while (map_int[all->map.y / SCALE][all->map.x / SCALE] != 1)
+// 		{
+
+// 			my_mlx_pixel_put()
+// 		}
+// 		all->player.start += M_PI_2 / 1000;
+// 	}
+// }
 void	draw_player(t_all *all)
 {
 	
@@ -161,7 +209,7 @@ int             main(void)
 	//draw_player(&all);
 	all.player.x = 187;
 	all.player.y = 213;
-	all.player.dir = M_PI / 3;
+	all.player.dir = M_PI_4;
 	draw_screen(&all);
 	mlx_hook(all.data.mlx_win, 2, 1L<<0, &control_player, &all);
 	//mlx_key_hook(all.data.mlx_win, control_player, &all); это работает медленнее, чем mlx_hook
