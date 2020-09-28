@@ -6,7 +6,7 @@
 /*   By: dbliss <dbliss@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/05 13:26:35 by dbliss            #+#    #+#             */
-/*   Updated: 2020/09/26 23:24:37 by dbliss           ###   ########.fr       */
+/*   Updated: 2020/09/28 16:11:04 by dbliss           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,8 @@
 #define D 2
 #define ESC 53
 #define SCALE 64
+#define LEFT 123
+#define RIGHT 124
 
 // typedef struct	s_flags
 // {
@@ -39,7 +41,7 @@ typedef struct  s_player {
     float dx; // delta x (конечная разность) or maybe it's a direction????
     float dy; // delta y
     float pa; // player's angle
-    float dir;
+    double dir;
 }               t_player;
 
 typedef   struct s_cross {
@@ -53,6 +55,7 @@ typedef   struct s_cross {
     float v_dx; // смещение по x
     float h_distance;
     float v_distance;
+    float closest_cross;
 }                t_cross;
 
 typedef struct  s_map {
@@ -63,6 +66,16 @@ typedef struct  s_map {
     int my;
     int mp;
 }               t_map;
+
+typedef struct s_rays {
+    int pa_center_x;
+    int pa_center_y; 
+    float pa_dist;
+    float angle;
+    float fov_start;
+    float fov_end;  
+
+}              t_rays;
 
 typedef struct s_data
 {
@@ -89,6 +102,7 @@ typedef struct  s_all
     t_player player;
     t_map   map;
     t_cross cross;
+    t_rays rays;
 }               t_all;
 
 

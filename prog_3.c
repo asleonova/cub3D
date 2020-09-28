@@ -112,7 +112,7 @@ int control_player(int keycode, t_all *all)
        all->player.y -= 5;
 	printf("%d\n", keycode);
 	draw_screen(all);
-    // else if(keycode == 126 || keycode == 124)
+   // else if(keycode == 126 || keycode == 124)
     //     data->vector += 5;
     // else if(keycode == 125 || keycode == 123)
     //     data->vector -=5;
