@@ -6,7 +6,7 @@
 /*   By: dbliss <dbliss@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/05 13:26:35 by dbliss            #+#    #+#             */
-/*   Updated: 2020/09/28 16:11:04 by dbliss           ###   ########.fr       */
+/*   Updated: 2020/09/29 18:59:00 by dbliss           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@
 #define SCALE 64
 #define LEFT 123
 #define RIGHT 124
+#define MAX 639
 
 // typedef struct	s_flags
 // {
@@ -56,6 +57,8 @@ typedef   struct s_cross {
     float h_distance;
     float v_distance;
     float closest_cross;
+    float wall_x;
+    float wall_y;
 }                t_cross;
 
 typedef struct  s_map {
