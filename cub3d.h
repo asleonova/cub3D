@@ -6,7 +6,7 @@
 /*   By: dbliss <dbliss@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/05 13:26:35 by dbliss            #+#    #+#             */
-/*   Updated: 2020/09/29 18:59:00 by dbliss           ###   ########.fr       */
+/*   Updated: 2020/09/30 12:32:23 by dbliss           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,10 @@
 
 #include <stdlib.h>
 #include <fcntl.h>
+#include <mlx.h>
+#include <stdio.h>
+#include <math.h>
+#include "libft/libft.h" 
 
 #define W 13
 #define A 0
@@ -24,25 +28,16 @@
 #define SCALE 64
 #define LEFT 123
 #define RIGHT 124
-#define MAX 639
-
-// typedef struct	s_flags
-// {
-// 	char		**head;
-//     char		*content;
-//     char        *next;
-// }				t_flags;
+#define MAX 640
+#define S_LENGTH 1200 // length of the screen
+#define S_WIDTH 800 // width of the screen
 
 typedef struct  s_player {
-
-    float start;
-    float end;
 	float x;
 	float y;
-    float dx; // delta x (конечная разность) or maybe it's a direction????
-    float dy; // delta y
-    float pa; // player's angle
-    double dir;
+    float dir;
+    float angle;
+    float fov_start; 
 }               t_player;
 
 typedef   struct s_cross {
@@ -65,30 +60,10 @@ typedef struct  s_map {
     
 	int x;
 	int y;
-    int mx;
-    int my;
-    int mp;
 }               t_map;
-
-typedef struct s_rays {
-    int pa_center_x;
-    int pa_center_y; 
-    float pa_dist;
-    float angle;
-    float fov_start;
-    float fov_end;  
-
-}              t_rays;
 
 typedef struct s_data
 {
-    //int resolution_x; // разрешение экрана
-    //int resolution_y; // разрешение экрана
-    //int coordinates_x; // текущие координаты по X
-    //int coordinates_y; // текущие координаты по Y
-    //double vector;
-    //int cub_x;
-    //int cub_y;
     void *img;
     char *addr;
     int bits_per_pixel;
@@ -105,26 +80,6 @@ typedef struct  s_all
     t_player player;
     t_map   map;
     t_cross cross;
-    t_rays rays;
 }               t_all;
-
-
-/*
-Пока закомментирую, так как код с этой структурой удалила - надо переработать.
-typedef struct	s_param
-{
-	int		    resolution;
-    char		*no;
-	char		*so;
-	char		*ea;
-	char		*we;
-	char		*sprite;
-	int		    ceiling;
-	int		    floor;
-	int 		map;
-}				t_param;
-*/
-
-//char    **make_map(t_flags **head, int size);
 
 #endif
