@@ -6,7 +6,7 @@
 /*   By: dbliss <dbliss@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/05 13:26:35 by dbliss            #+#    #+#             */
-/*   Updated: 2020/09/30 12:32:23 by dbliss           ###   ########.fr       */
+/*   Updated: 2020/09/30 18:20:30 by dbliss           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,13 +31,18 @@
 #define MAX 640
 #define S_LENGTH 1200 // length of the screen
 #define S_WIDTH 800 // width of the screen
+#define SCREEN_CENTER 400 // (1/2 width)
 
 typedef struct  s_player {
 	float x;
 	float y;
     float dir;
-    float angle;
-    float fov_start; 
+    float angle; // angle between subsequent rays
+    float fov_start;
+    float dist_to_screen;
+    float proj_slice_h[S_LENGTH]; // потом сделать динамически
+    float ceiling[S_LENGTH];
+
 }               t_player;
 
 typedef   struct s_cross {
@@ -52,6 +57,7 @@ typedef   struct s_cross {
     float h_distance;
     float v_distance;
     float closest_cross;
+    float right_distance;
     float wall_x;
     float wall_y;
 }                t_cross;
