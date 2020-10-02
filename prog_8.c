@@ -153,8 +153,7 @@ void fix_angle(float *angle)
 void calculate_wall(t_all *all, int i)
 {
 	all->player.proj_slice_h[i] = ceil((SCALE / all->cross.right_distance) * all->player.dist_to_screen);
-	all->player.ceiling[i] = SCREEN_CENTER - (all->player.proj_slice_h[i] / 2);
-	// printf()      
+	all->player.ceiling[i] = SCREEN_CENTER - (all->player.proj_slice_h[i] / 2);     
 
 }
 void draw_ceiling(t_all *all, int width)
@@ -168,8 +167,7 @@ void draw_ceiling(t_all *all, int width)
  
 void draw_wall(t_all *all, int width)
 {
-	int y;
-	y = all->player.ceiling[width];
+	int y = all->player.ceiling[width];
 	int ceiling_y = all->player.ceiling[width]; // координата y для отрисовки стены (73 + 1)
 	while (y < ceiling_y + all->player.proj_slice_h[width])
 	{
@@ -179,7 +177,7 @@ void draw_wall(t_all *all, int width)
 
 void draw_floor(t_all *all, int width)
 {
-	int height = all->player.proj_slice_h[width]; // координата начала для отрисовки пола
+	int height = all->player.proj_slice_h[width] + all->player.ceiling[width]; // координата начала для отрисовки пола
 	while (height < S_WIDTH)
 	{
 		my_mlx_pixel_put(&all->data, width, height++, 0xFF00FF);
@@ -190,9 +188,9 @@ void	draw_screen(t_all *all)
 	int width = 0;
 	while (width < S_LENGTH)
 	{
-		//draw_ceiling(all, width);
+		draw_ceiling(all, width);
 		draw_wall(all, width);
-		//draw_floor(all, width);
+		draw_floor(all, width);
 		width++;
 	}
 }
