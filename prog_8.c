@@ -7,8 +7,8 @@
 	{ 1, 0, 0, 0, 0, 0, 0, 0, 0, 1 },
 	{ 1, 0, 0, 0, 0, 0, 0, 0, 0, 1 },
 	{ 1, 0, 0, 0, 0, 0, 0, 0, 0, 1 },
-	{ 1, 0, 0, 0, 0, 0, 0, 0, 0, 1 },
-	{ 1, 0, 0, 0, 0, 0, 0, 0, 0, 1 },
+	{ 1, 0, 0, 0, 0, 0, 1, 1, 0, 1 },
+	{ 1, 0, 0, 0, 0, 0, 0, 1, 0, 1 },
 	{ 1, 0, 0, 0, 0, 0, 0, 0, 0, 1 },
 	{ 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }
 };
@@ -139,7 +139,7 @@ void shortest_distance(t_all *all) // choose the closeset wall hit coordinate (w
 			all->cross.wall_y = all->cross.vy;
 		}
 		all->cross.right_distance = all->cross.closest_cross * cos(all->player.dir - all->player.fov_start); // for fisheye effect
-		draw_ray(all);
+		// draw_ray(all);
 }
 
 void fix_angle(float *angle)
@@ -152,14 +152,65 @@ void fix_angle(float *angle)
 
 void calculate_wall(t_all *all, int i)
 {
-	all->player.proj_slice_h[i] = (SCALE / all->cross.right_distance) * all->player.dist_to_screen;
-	all->player.ceiling[i] = ceil(SCREEN_CENTER - all->player.proj_slice_h[i] / 2);
+	all->player.proj_slice_h[i] = ceil((SCALE / all->cross.right_distance) * all->player.dist_to_screen);
+	all->player.ceiling[i] = SCREEN_CENTER - (all->player.proj_slice_h[i] / 2);
+	// printf()      
 
 }
+void draw_ceiling(t_all *all, int width)
+{
+	int height = 0;
+	while (height < all->player.ceiling[width])
+	{
+		my_mlx_pixel_put(&all->data, width, height++, 0xFFB6C1);
+	}
+}
+ 
+void draw_wall(t_all *all, int width)
+{
+	int y;
+	y = all->player.ceiling[width];
+	int ceiling_y = all->player.ceiling[width]; // координата y для отрисовки стены (73 + 1)
+	while (y < ceiling_y + all->player.proj_slice_h[width])
+	{
+		my_mlx_pixel_put(&all->data, width, y++, 0x00FF0000);
+	}
+}
 
+void draw_floor(t_all *all, int width)
+{
+	int height = all->player.proj_slice_h[width]; // координата начала для отрисовки пола
+	while (height < S_WIDTH)
+	{
+		my_mlx_pixel_put(&all->data, width, height++, 0xFF00FF);
+	}
+}
+void	draw_screen(t_all *all)
+{
+	int width = 0;
+	while (width < S_LENGTH)
+	{
+		//draw_ceiling(all, width);
+		draw_wall(all, width);
+		//draw_floor(all, width);
+		width++;
+	}
+}
+
+// void	draw_screen(t_all *all, int i)
+// {
+// 	// int width = 0;
+// 	// while (width < S_LENGTH)
+// 	{
+// 		draw_ceiling(all, i);
+// 		draw_wall(all, i);
+// 		draw_floor(all, i);
+// 		// width++;
+// 	}
+// }
 void	cast_ray(t_all *all)
 {
-	all->player.fov_start = all->player.dir - M_PI / 6;
+	all->player.fov_start = all->player.dir + M_PI / 6;
 	int i = 0;
 	while (i < S_LENGTH)
 	{
@@ -170,47 +221,9 @@ void	cast_ray(t_all *all)
 		vertical_hit(all); // for each ray
 		shortest_distance(all); // for each ray
 		calculate_wall(all, i);
-		all->player.fov_start += all->player.angle; // change the ray position
+		// draw_screen(all, i);
+		all->player.fov_start -= all->player.angle; // change the ray position
 		i++;
-	}
-}
-
-
-void draw_ceiling(t_all *all, int width)
-{
-	int height = 0;
-	while (height < all->player.ceiling[width])
-	{
-		my_mlx_pixel_put(&all->data, width, height++, 0xFFB6C1);
-	}
-}
-
-void draw_wall(t_all *all, int width)
-{
-	int height = all->player.ceiling[width] + 1; // координата y для отрисовки стены (73 + 1)
-	while (height < all->player.proj_slice_h[width])
-	{
-		my_mlx_pixel_put(&all->data, width, height++, 0x00FF0000);
-	}
-}
-
-void draw_floor(t_all *all, int width)
-{
-	int height = all->player.proj_slice_h[width] + 1; // координата начала для отрисовки пола
-	while (height < S_WIDTH)
-	{
-		my_mlx_pixel_put(&all->data, width, height++, 0x800080);
-	}
-}
-void	draw_screen(t_all *all)
-{
-	int width = 0;
-	while (width < S_LENGTH)
-	{
-		draw_ceiling(all, width);
-		draw_wall(all, width);
-		draw_floor(all, width);
-		width++;
 	}
 }
 
@@ -222,7 +235,7 @@ void	draw_player(t_all *all)
 
 void	draw_map(t_all *all)
 {
-	all->data.img = mlx_new_image(all->data.mlx, 1200, 800);
+	all->data.img = mlx_new_image(all->data.mlx, 1980, 1040);
 	all->data.addr = mlx_get_data_addr(all->data.img, &all->data.bits_per_pixel, &all->data.line_length,
                                   &all->data.endian);
 	all->map.y = 0;
@@ -246,10 +259,10 @@ void	draw_map(t_all *all)
 
 int     render_next_frame(t_all *all)
 {
-	//draw_map(all);
-	//draw_player(all);
+	// draw_player(all);
 	cast_ray(all);
 	draw_screen(all);
+	// draw_map(all);
 	mlx_put_image_to_window(all->data.mlx, all->data.mlx_win, all->data.img, 0, 0);
 	return (1);
 }
@@ -276,6 +289,9 @@ int control_player(int keycode, t_all *all)
 		all->player.dir -= 0.03;
 		fix_angle(&all->player.dir);
 	}
+	printf("%f\n", all->player.x);
+	printf("%f\n", all->player.y);
+	printf("%f\n", all->player.dir);
 	return (0);
 }
 
@@ -284,7 +300,7 @@ void init_player(t_all *all)
 {
 	all->player.x = 187;
 	all->player.y = 213;
-	all->player.dir = M_PI_2;
+	all->player.dir = M_PI_4;
 	all->player.angle = (M_PI / 3) / S_LENGTH; // fov / width of projection plane
 	all->player.dist_to_screen = (S_LENGTH / 2) / tan(M_PI / 6); // 1/2 screen / tan(30)
 
