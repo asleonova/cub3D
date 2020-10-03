@@ -6,7 +6,7 @@
 /*   By: dbliss <dbliss@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/05 13:26:35 by dbliss            #+#    #+#             */
-/*   Updated: 2020/10/02 18:00:38 by dbliss           ###   ########.fr       */
+/*   Updated: 2020/10/03 23:34:23 by dbliss           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,9 +29,9 @@
 #define LEFT 123
 #define RIGHT 124
 #define MAX 640
-#define S_LENGTH 1980// length of the screen
-#define S_WIDTH 1040 // width of the screen
-#define SCREEN_CENTER 520 // (1/2 width)
+#define S_LENGTH 1200// length of the screen
+#define S_WIDTH 800 // width of the screen
+#define SCREEN_CENTER 400 // (1/2 width)
 
 typedef struct  s_player {
 	float x;
@@ -60,6 +60,7 @@ typedef   struct s_cross {
     float right_distance;
     float wall_x;
     float wall_y;
+    float offset[S_LENGTH];
 }                t_cross;
 
 typedef struct  s_map {
@@ -80,12 +81,26 @@ typedef struct s_data
 
 }       t_data;
 
+typedef struct s_texture_data
+{
+   void *img;
+   char  *relative_path;
+   int   img_width;
+   int   img_height;
+   int   line_length;
+   int   bits_per_pixel;
+   int   endian;
+   char  *addr;
+   float x_image_to_texture_ratio; // это пока не использую
+}             t_texture_data;
+
 typedef struct  s_all
 {
     t_data  data;
     t_player player;
     t_map   map;
     t_cross cross;
+    t_texture_data texture;
 }               t_all;
 
 #endif

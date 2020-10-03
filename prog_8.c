@@ -7,17 +7,59 @@
 	{ 1, 0, 0, 0, 0, 0, 0, 0, 0, 1 },
 	{ 1, 0, 0, 0, 0, 0, 0, 0, 0, 1 },
 	{ 1, 0, 0, 0, 0, 0, 0, 0, 0, 1 },
-	{ 1, 0, 0, 0, 0, 0, 1, 1, 0, 1 },
-	{ 1, 0, 0, 0, 0, 0, 0, 1, 0, 1 },
+	{ 1, 0, 0, 0, 0, 0, 1, 0, 0, 1 },
+	{ 1, 0, 0, 0, 0, 0, 0, 0, 0, 1 },
 	{ 1, 0, 0, 0, 0, 0, 0, 0, 0, 1 },
 	{ 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }
 };
+
+// int map_int[24][24] =
+// {
+//   {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
+//   {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,1},
+//   {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+//   {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+//   {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,1},
+//   {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,0,0,0,0,0,1},
+//   {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+//   {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+//   {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+//   {1,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+//   {1,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+//   {1,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,1},
+//   {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+//   {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+//   {1,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+//   {1,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+//   {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+//   {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,1},
+//   {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,1},
+//   {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+//   {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+//   {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+//   {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+//   {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1}
+// };
+
+
 void            my_mlx_pixel_put(t_data *data, int x, int y, int color)
 {
     char    *dst;
 
     dst = data->addr + (y * data->line_length + x * (data->bits_per_pixel / 8));
     *(unsigned int*)dst = color;
+}
+
+
+int            get_pixel_from_img(t_texture_data *texture, int x, int y)
+{
+    char    *dst;
+	unsigned int color;
+
+    dst = texture->addr + (y * texture->line_length + x * (texture->bits_per_pixel / 8));
+    color = *(unsigned int*)dst;
+	return (color);
+	printf("%d\n", color);
 }
 
 void 	horizontal_cross(t_all *all) // find the coordinates of the first horizontal cub cross + the delta
@@ -56,7 +98,6 @@ void	vertical_cross(t_all *all) // find the coordinates of the first vertical cu
 	}
 }
 
-// где-ьл посчталось, что высота стены == 0, надо исправить!!!! 
 int is_out_of_map(float x, float y) // checks if the coordinate is outside of the map
 {
 	if ((x > 0 && x < MAX) && (y > 0 && y < MAX))
@@ -124,22 +165,24 @@ void	draw_ray(t_all *all)
 	}
 }
 
-void shortest_distance(t_all *all) // choose the closeset wall hit coordinate (whether it's horizontal or vertical)
+void shortest_distance(t_all *all, int i) // choose the closeset wall hit coordinate (whether it's horizontal or vertical)
 {
 		if (all->cross.h_distance < all->cross.v_distance)
 		{
 			all->cross.closest_cross = all->cross.h_distance; // remember this coordinate
 			all->cross.wall_x = all->cross.hx;
 			all->cross.wall_y = all->cross.hy;
+			all->cross.offset[i] = fmod(all->cross.wall_y, SCALE);
 		}
 		else
 		{
 			all->cross.closest_cross = all->cross.v_distance;
 			all->cross.wall_x = all->cross.vx;
 			all->cross.wall_y = all->cross.vy;
+			all->cross.offset[i] = fmod(all->cross.wall_x, SCALE);
 		}
 		all->cross.right_distance = all->cross.closest_cross * cos(all->player.dir - all->player.fov_start); // for fisheye effect
-		// draw_ray(all);
+		//draw_ray(all);
 }
 
 void fix_angle(float *angle)
@@ -168,10 +211,11 @@ void draw_ceiling(t_all *all, int width)
 void draw_wall(t_all *all, int width)
 {
 	int y = all->player.ceiling[width];
-	int ceiling_y = all->player.ceiling[width]; // координата y для отрисовки стены (73 + 1)
+	int ceiling_y = all->player.ceiling[width];
+	unsigned int pixel = get_pixel_from_img(&all->texture, 242, 389);
 	while (y < ceiling_y + all->player.proj_slice_h[width])
 	{
-		my_mlx_pixel_put(&all->data, width, y++, 0x00FF0000);
+		my_mlx_pixel_put(&all->data, width, y++, pixel);
 	}
 }
 
@@ -195,17 +239,6 @@ void	draw_screen(t_all *all)
 	}
 }
 
-// void	draw_screen(t_all *all, int i)
-// {
-// 	// int width = 0;
-// 	// while (width < S_LENGTH)
-// 	{
-// 		draw_ceiling(all, i);
-// 		draw_wall(all, i);
-// 		draw_floor(all, i);
-// 		// width++;
-// 	}
-// }
 void	cast_ray(t_all *all)
 {
 	all->player.fov_start = all->player.dir + M_PI / 6;
@@ -217,9 +250,8 @@ void	cast_ray(t_all *all)
 		vertical_cross(all); // for each ray
 		horizontal_hit(all); // for each ray
 		vertical_hit(all); // for each ray
-		shortest_distance(all); // for each ray
+		shortest_distance(all, i); // for each ray
 		calculate_wall(all, i);
-		// draw_screen(all, i);
 		all->player.fov_start -= all->player.angle; // change the ray position
 		i++;
 	}
@@ -233,7 +265,7 @@ void	draw_player(t_all *all)
 
 void	draw_map(t_all *all)
 {
-	all->data.img = mlx_new_image(all->data.mlx, 1980, 1040);
+	all->data.img = mlx_new_image(all->data.mlx, 1200, 800);
 	all->data.addr = mlx_get_data_addr(all->data.img, &all->data.bits_per_pixel, &all->data.line_length,
                                   &all->data.endian);
 	all->map.y = 0;
@@ -246,7 +278,8 @@ void	draw_map(t_all *all)
 			{
 				my_mlx_pixel_put(&all->data, all->map.x, all->map.y, 0x000000FF);
 			}
-			else if (map_int[all->map.y / SCALE][all->map.x / SCALE] == 0)
+			// else if (map_int[all->map.y / SCALE][all->map.x / SCALE] == 0)
+			else
 				my_mlx_pixel_put(&all->data, all->map.x, all->map.y, 0x00000000);
 			all->map.x++;
 
@@ -257,10 +290,10 @@ void	draw_map(t_all *all)
 
 int     render_next_frame(t_all *all)
 {
-	// draw_player(all);
+	//draw_map(all);
+	//draw_player(all);
 	cast_ray(all);
 	draw_screen(all);
-	// draw_map(all);
 	mlx_put_image_to_window(all->data.mlx, all->data.mlx_win, all->data.img, 0, 0);
 	return (1);
 }
@@ -279,12 +312,12 @@ int control_player(int keycode, t_all *all)
        all->player.y -= 5;
 	else if(keycode == LEFT)
 	{
-		all->player.dir += 0.03;
+		all->player.dir += 0.003;
 		fix_angle(&all->player.dir);
 	}
     else if(keycode == RIGHT)
 	{
-		all->player.dir -= 0.03;
+		all->player.dir -= 0.003;
 		fix_angle(&all->player.dir);
 	}
 	printf("%f\n", all->player.x);
@@ -308,11 +341,19 @@ int             main(void)
 { 
 	
 	t_all	all;
+	t_texture_data texture;
+
     all.data.mlx = mlx_init();
     all.data.mlx_win = mlx_new_window(all.data.mlx, S_LENGTH, S_WIDTH, "CUB_3D!");
+
 	all.data.img = mlx_new_image(all.data.mlx, S_LENGTH, S_WIDTH);
 	all.data.addr = mlx_get_data_addr(all.data.img, &all.data.bits_per_pixel, &all.data.line_length,
                                   &all.data.endian);
+
+	texture.relative_path = "./bolder.xpm";
+	texture.img = mlx_xpm_file_to_image(all.data.mlx, texture.relative_path, &texture.img_width, &texture.img_height);
+	texture.addr = mlx_get_data_addr(texture.img, &texture.bits_per_pixel, &texture.line_length, &texture.endian);
+	
 	init_player(&all);
 	mlx_hook(all.data.mlx_win, 2, 1L<<0, &control_player, &all);
 	mlx_loop_hook(all.data.mlx, render_next_frame, &all);
