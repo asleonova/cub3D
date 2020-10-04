@@ -6,7 +6,7 @@
 #    By: dbliss <dbliss@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/08/05 12:46:16 by dbliss            #+#    #+#              #
-#    Updated: 2020/09/30 16:52:07 by dbliss           ###   ########.fr        #
+#    Updated: 2020/10/04 18:53:39 by dbliss           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,7 @@ NAME = cub3D
 
 HEADER = cub3d.h
 
-SRCS = prog_8.c
+SRCS = prog_9.c
 
 OBJS = $(SRCS:.c=.o)
 

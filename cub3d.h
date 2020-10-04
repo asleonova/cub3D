@@ -6,7 +6,7 @@
 /*   By: dbliss <dbliss@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/05 13:26:35 by dbliss            #+#    #+#             */
-/*   Updated: 2020/10/03 23:34:23 by dbliss           ###   ########.fr       */
+/*   Updated: 2020/10/04 19:49:12 by dbliss           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,6 @@ typedef struct s_texture_data
    int   bits_per_pixel;
    int   endian;
    char  *addr;
-   float x_image_to_texture_ratio; // это пока не использую
 }             t_texture_data;
 
 typedef struct  s_all

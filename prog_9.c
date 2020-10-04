@@ -50,16 +50,28 @@ void            my_mlx_pixel_put(t_data *data, int x, int y, int color)
     *(unsigned int*)dst = color;
 }
 
+// static int  draw_textures(t_cub *cub, double offset, int j)
+// {
+//     char    *dst;
+//     int     color;
+//     int     side;
+//     side = cub->tex.index;
+//     j = (j - cub->win.y / 2 + cub->ray.height / 2);
+//     dst = cub->tex_ns.adr[side] + ((int)(j * (cub->tex_ns.height[side] / cub->ray.height)) * cub->tex_ns.line[side]) + ((int)(offset * (double)cub->tex_ns.width[side])) 
+// 	* (cub->tex_ns.bits[side] / 8);
+//     color = *(unsigned int*)dst;
+//     return (color);
+// }
 
-int            get_pixel_from_img(t_texture_data *texture, int x, int y)
+int            get_pixel_from_img(t_all *all, int i, int y)
 {
     char    *dst;
 	unsigned int color;
 
-    dst = texture->addr + (y * texture->line_length + x * (texture->bits_per_pixel / 8));
+	y = (all->player.ceiling[i] - SCREEN_CENTER + (all->player.proj_slice_h[i] / 2));
+    dst = all->texture.addr + ((int)(y * (all->texture.img_height / all->player.proj_slice_h[i])) * all->texture.line_length) + ((int)(all->cross.offset[i] * all->texture.img_width)) * (all->texture.bits_per_pixel / 8);
     color = *(unsigned int*)dst;
 	return (color);
-	printf("%d\n", color);
 }
 
 void 	horizontal_cross(t_all *all) // find the coordinates of the first horizontal cub cross + the delta
@@ -195,6 +207,7 @@ void fix_angle(float *angle)
 
 void calculate_wall(t_all *all, int i)
 {
+	// all->player.proj_slice_h[i] = S_WIDTH * 64 / all->cross.right_distance;
 	all->player.proj_slice_h[i] = ceil((SCALE / all->cross.right_distance) * all->player.dist_to_screen);
 	all->player.ceiling[i] = SCREEN_CENTER - (all->player.proj_slice_h[i] / 2);     
 
@@ -212,9 +225,9 @@ void draw_wall(t_all *all, int width)
 {
 	int y = all->player.ceiling[width];
 	int ceiling_y = all->player.ceiling[width];
-	unsigned int pixel = get_pixel_from_img(&all->texture, 242, 389);
 	while (y < ceiling_y + all->player.proj_slice_h[width])
 	{
+		unsigned int pixel = get_pixel_from_img(all, width, y);
 		my_mlx_pixel_put(&all->data, width, y++, pixel);
 	}
 }
@@ -303,13 +316,26 @@ int control_player(int keycode, t_all *all)
      if(keycode == ESC)
          mlx_destroy_window(all->data.mlx, all->data.mlx_win);
     else if(keycode == A)
-        all->player.x -= 5;
+	{
+        all->player.x -= 5 * sin(all->player.dir);
+		all->player.y -= 5 * cos(all->player.dir);
+	}
     else if(keycode == S)
-        all->player.y += 5;
+	{
+		all->player.x -= 5 * cos(all->player.dir);
+		all->player.y += 5 * sin(all->player.dir);
+	}
+        
     else if(keycode == D)
-        all->player.x += 5;
+        {
+			all->player.x += 5 * sin(all->player.dir);
+			all->player.y += 5 * cos(all->player.dir);
+		}
     else if(keycode == W)
-       all->player.y -= 5;
+       {
+		   all->player.x += 5 * cos(all->player.dir);
+			all->player.y -= 5 * sin(all->player.dir);
+	   }
 	else if(keycode == LEFT)
 	{
 		all->player.dir += 0.03;
@@ -331,7 +357,7 @@ void init_player(t_all *all)
 {
 	all->player.x = 187;
 	all->player.y = 213;
-	all->player.dir = M_PI_4;
+	all->player.dir = 3 * M_PI_2;
 	all->player.angle = (M_PI / 3) / S_LENGTH; // fov / width of projection plane
 	all->player.dist_to_screen = (S_LENGTH / 2) / tan(M_PI / 6); // 1/2 screen / tan(30)
 
@@ -349,7 +375,7 @@ int             main(void)
 	all.data.addr = mlx_get_data_addr(all.data.img, &all.data.bits_per_pixel, &all.data.line_length,
                                   &all.data.endian);
 
-	all.texture.relative_path = "./bolder.xpm";
+	all.texture.relative_path = "./wall2.xpm";
 	all.texture.img = mlx_xpm_file_to_image(all.data.mlx, all.texture.relative_path, &all.texture.img_width, &all.texture.img_height);
 	all.texture.addr = mlx_get_data_addr(all.texture.img, &all.texture.bits_per_pixel, &all.texture.line_length, &all.texture.endian);
 	
