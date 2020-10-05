@@ -6,7 +6,7 @@
 #    By: dbliss <dbliss@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/08/05 12:46:16 by dbliss            #+#    #+#              #
-#    Updated: 2020/10/04 18:53:39 by dbliss           ###   ########.fr        #
+#    Updated: 2020/10/05 16:50:03 by dbliss           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,12 @@ NAME = cub3D
 
 HEADER = cub3d.h
 
-SRCS = prog_9.c
+SRCS = ./src/main.c \
+	./src/inits.c \
+	./src/drawing.c \
+	./src/calculations.c \
+	./src/player_move.c
+
 
 OBJS = $(SRCS:.c=.o)
 
@@ -23,7 +28,7 @@ CC = gcc
 CFLAGS = -Wall -Wextra -Werror -c -g
 
 LIBFT_ARC = libft/libft.a
-MLX_ARC = mlx/libmlx.a
+MLX_ARC = ./mlx/libmlx.a
 
 		
 all: $(NAME)
