@@ -61,6 +61,18 @@ int     render_next_frame(t_all *all)
 // 	};
 // }
 
+// тут нужно будет сделать так, чтобы в 4 разные текстуры записалось 4 разных значения. 
+void init_textures(t_all *all, t_texture_data *path)
+{
+	all->texture.relative_path = &path;
+	all->texture.img = mlx_xpm_file_to_image(all->data.mlx, all->texture.relative_path, &all->texture.img_width, &all->texture.img_height);
+	all->texture.addr = mlx_get_data_addr(all->texture.img, &all->texture.bits_per_pixel, &all->texture.line_length, &all->texture.endian);
+}
+
+void get_textures(t_all *all)
+{
+	init_textures(all, "./test.xpm");
+}
 int             main(void)
 { 
 	t_all	all;
@@ -73,10 +85,7 @@ int             main(void)
 	all.data.addr = mlx_get_data_addr(all.data.img, &all.data.bits_per_pixel, &all.data.line_length,
                                   &all.data.endian);
 
-	all.texture.relative_path = "./wall2.xpm";
-	all.texture.img = mlx_xpm_file_to_image(all.data.mlx, all.texture.relative_path, &all.texture.img_width, &all.texture.img_height);
-	all.texture.addr = mlx_get_data_addr(all.texture.img, &all.texture.bits_per_pixel, &all.texture.line_length, &all.texture.endian);
-	
+	get_textures(&all);
 	init_player(&all);
 	mlx_hook(all.data.mlx_win, 2, 1L<<0, &control_player, &all);
 	mlx_loop_hook(all.data.mlx, render_next_frame, &all);

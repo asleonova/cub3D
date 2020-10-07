@@ -62,6 +62,7 @@ typedef   struct s_cross {
     float wall_x;
     float wall_y;
     float offset[S_WIDTH];
+    int hit; // 1 - hit horizontally, 0 - hit vertically
 }                t_cross;
 
 typedef struct  s_map {
@@ -94,6 +95,14 @@ typedef struct s_texture_data
    char  *addr;
 }             t_texture_data;
 
+typedef struct s_wall_side
+{
+   t_texture_data north;
+   t_texture_data south;
+   t_texture_data east;
+   t_texture_data west;
+}             t_wall_side;
+
 typedef struct  s_all
 {
     int     **make_map;
@@ -102,6 +111,7 @@ typedef struct  s_all
     t_map   map;
     t_cross cross;
     t_texture_data texture;
+    t_wall_side wall_sides;
 }               t_all;
 
 void            my_mlx_pixel_put(t_data *data, int x, int y, int color);
