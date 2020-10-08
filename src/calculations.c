@@ -99,26 +99,20 @@ void shortest_distance(t_all *all, int i) // choose the closeset wall hit coordi
 			all->cross.closest_cross = all->cross.h_distance; // remember this coordinate
 			all->cross.wall_x = all->cross.hx;
 			all->cross.wall_y = all->cross.hy;
-			all->wall.cross = 1; // remember that we hit the wall horizontally to check the wall after
+			all->cross.hit[i] = 1; // remember that we hit the wall horizontally to check the wall after
 			//all->cross.offset = fmod(all->cross.wall_y, SCALE);
+			all->cross.offset[i] = fmod(all->cross.wall_x, SCALE);
 		}
 		if (all->cross.h_distance > all->cross.v_distance)
 		{
 			all->cross.closest_cross = all->cross.v_distance;
 			all->cross.wall_x = all->cross.vx;
 			all->cross.wall_y = all->cross.vy;
-			all->cross.hit = 0; // remember that we hit the wall vertically to check the wall after
+			all->cross.hit[i] = 0; // remember that we hit the wall vertically to check the wall after
 			//all->cross.offset = fmod(all->cross.wall_x, SCALE);
-		}
-		all->cross.right_distance = all->cross.closest_cross * cos(all->player.dir - all->player.fov_start); // for fisheye effect
-		if (all->cross.h_distance < all->cross.v_distance)
-		{
-			all->cross.offset[i] = fmod(all->cross.wall_x, SCALE);
-		}
-		else if (all->cross.h_distance > all->cross.v_distance)
-		{
 			all->cross.offset[i] = fmod(all->cross.wall_y, SCALE);
 		}
+		all->cross.right_distance = all->cross.closest_cross * cos(all->player.dir - all->player.fov_start); // for fisheye effect
 }
 
 void fix_angle(float *angle)
@@ -137,37 +131,31 @@ void calculate_wall(t_all *all, int i)
 
 }
 
-void find_wall(t_all *all)
+void find_wall(t_all *all, int i)
 {	
-	fix_angle(all->player.fov_start);
-	if (all->player.fov_start >= 0 && all->player.fov_start =< M_PI_2) // first quater
+	fix_angle(&all->player.fov_start);
+	if (all->player.fov_start > 0 && all->player.fov_start < M_PI)
 	{
-		if (all->cross.hit == 1)
-			// hit along x, east wall
-		else
-			// hit along y, north wall
+		if (all->cross.hit[i] == 1)
+			all->cross.hit_side = north;
+		if (all->cross.hit[i] == 0)
+		{
+			if (all->player.fov_start > 0 && all->player.fov_start < M_PI_2)
+				all->cross.hit_side = east;
+			else if (all->player.fov_start > M_PI_2 && all->player.fov_start < M_PI)
+				all->cross.hit_side = west;
+		} 
 	}
-
-	if (all->player.fov_start >= M_PI_2 && all->player.fov_start <= M_PI) // second quater
+	if (all->player.fov_start > M_PI && all->player.fov_start < 2 * M_PI)
 	{
-		if (all->cross.hit == 1)
-			// hit along x, west wall
-		else
-			// hit along y, north wall
+		if (all->cross.hit[i] == 1)
+			all->cross.hit_side = south;
+		if (all->cross.hit[i] == 0)
+		{
+			if (all->player.fov_start > M_PI && all->player.fov_start < 3 * M_PI_2)
+				all->cross.hit_side = west;
+			else if  (all->player.fov_start > 3 * M_PI_2 && all->player.fov_start < 2 * M_PI)
+				all->cross.hit_side = east;
+		}
 	}
-		
-	if (all->player.fov_start >= M_PI && al->player.fov_start <= 3 * M_PI_2) // third quater
-	{
-		if (all->cross.hit == 1)
-			// hit along x, west wall
-		else
-			// hit along y, south wall
-	}
-
-	if (all->player.fov_start >= 3 * M_PI_2 && all->player.fov_start <= 2 * M_PI) // fourth quater
-	{
-		if (all->cross.hit == 1)
-			// hit along x, east wall
-		else
-			// hit along y, south wall
-	}
+}

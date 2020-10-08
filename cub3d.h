@@ -45,6 +45,13 @@ typedef struct  s_player {
     float ceiling[S_WIDTH];
 
 }               t_player;
+typedef enum    e_hit_side
+{
+    north = 0,
+    east = 1,
+    south = 2,
+    west = 3
+}               t_hit_side;
 
 typedef   struct s_cross {
     float hx;
@@ -62,7 +69,8 @@ typedef   struct s_cross {
     float wall_x;
     float wall_y;
     float offset[S_WIDTH];
-    int hit; // 1 - hit horizontally, 0 - hit vertically
+    int hit[S_WIDTH]; // 1 - hit horizontally, 0 - hit vertically
+    t_hit_side hit_side;
 }                t_cross;
 
 typedef struct  s_map {
@@ -83,7 +91,7 @@ typedef struct s_data
 
 }       t_data;
 
-typedef struct s_texture_data
+typedef struct s_texture_data 
 {
    void *img;
    char  *relative_path;
@@ -95,14 +103,6 @@ typedef struct s_texture_data
    char  *addr;
 }             t_texture_data;
 
-typedef struct s_wall_side
-{
-   t_texture_data north;
-   t_texture_data south;
-   t_texture_data east;
-   t_texture_data west;
-}             t_wall_side;
-
 typedef struct  s_all
 {
     int     **make_map;
@@ -110,8 +110,7 @@ typedef struct  s_all
     t_player player;
     t_map   map;
     t_cross cross;
-    t_texture_data texture;
-    t_wall_side wall_sides;
+    t_texture_data texture[4];
 }               t_all;
 
 void            my_mlx_pixel_put(t_data *data, int x, int y, int color);
@@ -129,6 +128,7 @@ void vertical_hit(t_all *all);
 void shortest_distance(t_all *all, int i);
 void fix_angle(float *angle);
 void calculate_wall(t_all *all, int i);
+void find_wall(t_all *all, int i);
 
 
 
