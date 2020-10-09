@@ -37,7 +37,7 @@ void	vertical_cross(t_all *all) // find the coordinates of the first vertical cu
 	{
 		all->cross.vx = (int)(all->player.x / SCALE) * SCALE - 0.001;
 		all->cross.v_dx = -SCALE;
-		all->cross.vy =all->player.y + (all->player.x - all->cross.vx) * tan(all->player.fov_start);
+		all->cross.vy = all->player.y + (all->player.x - all->cross.vx) * tan(all->player.fov_start);
 		all->cross.v_dy = SCALE * tan(all->player.fov_start);
 	}
 	else // the ray looking right
