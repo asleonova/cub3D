@@ -69,7 +69,7 @@ typedef   struct s_cross {
     float wall_x;
     float wall_y;
     float offset[S_WIDTH];
-    int hit[S_WIDTH]; // 1 - hit horizontally, 0 - hit vertically
+    int hit; // 1 - hit horizontally, 0 - hit vertically
     t_hit_side hit_side;
 }                t_cross;
 
@@ -128,7 +128,10 @@ void vertical_hit(t_all *all);
 void shortest_distance(t_all *all, int i);
 void fix_angle(float *angle);
 void calculate_wall(t_all *all, int i);
-void find_wall(t_all *all, int i);
+void find_wall(t_all *all);
+void draw_ceiling(t_all *all, int width);
+void draw_floor(t_all *all, int width);
+
 
 
 

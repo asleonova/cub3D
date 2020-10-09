@@ -12,9 +12,11 @@ void	cast_ray(t_all *all)
 		horizontal_hit(all); // for each ray
 		vertical_hit(all); // for each ray
 		shortest_distance(all, i); // for each ray
-        //draw_ray(all);
-		find_wall(all, i);
 		calculate_wall(all, i);
+		find_wall(all);
+		draw_ceiling(all, i);
+		draw_pixels_from_img(all, i);
+		draw_floor(all, i);
 		all->player.fov_start -= all->player.angle; // change the ray position
 		i++;
 	}
@@ -23,9 +25,9 @@ void	cast_ray(t_all *all)
 int     render_next_frame(t_all *all)
 {
 	//draw_map(all);
-	//draw_player(all);
+	//draw_player(all); 
 	cast_ray(all);
-	draw_screen(all);
+	//draw_screen(all);
 	mlx_put_image_to_window(all->data.mlx, all->data.mlx_win, all->data.img, 0, 0);
 	return (1);
 }
@@ -74,7 +76,7 @@ void get_texture_data_south(t_all *all)
 {
 	all->texture[south].relative_path = "./south_wall.xpm";
 	all->texture[south].img = mlx_xpm_file_to_image(all->data.mlx, all->texture[south].relative_path, &all->texture[south].img_width, &all->texture[south].img_height);
-	all->texture[north].addr = mlx_get_data_addr(all->texture[south].img, &all->texture[south].bits_per_pixel, &all->texture[south].line_length, &all->texture[south].endian);
+	all->texture[south].addr = mlx_get_data_addr(all->texture[south].img, &all->texture[south].bits_per_pixel, &all->texture[south].line_length, &all->texture[south].endian);
 }
 
 void get_texture_data_east(t_all *all)

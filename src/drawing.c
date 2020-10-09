@@ -72,7 +72,7 @@ void	draw_map(t_all *all)
 	}
 }
 
-static void draw_ceiling(t_all *all, int width)
+void draw_ceiling(t_all *all, int width)
 {
 	int height = 0;
 	while (height < all->player.ceiling[width])
@@ -91,7 +91,7 @@ static void draw_ceiling(t_all *all, int width)
 // 		my_mlx_pixel_put(&all->data, width, y++, pixel);
 // 	}                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           
 // }
-static void draw_floor(t_all *all, int width)
+void draw_floor(t_all *all, int width)
 {
 	int height = all->player.slice_height[width] + all->player.ceiling[width]; // координата начала для отрисовки пола
 	while (height < S_HEIGHT)
