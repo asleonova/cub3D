@@ -4,7 +4,7 @@ int map_int_1 [10] [10] = { // нужно обязательно найти по
     { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 },
     { 1, 0, 0, 0, 0, 0, 0, 0, 0, 1 },
     { 1, 0, 0, 0, 0, 0, 0, 1, 0, 1 },
-	{ 1, 0, 0, 0, 0, 0, 0, 0, 0, 1 },
+	{ 1, 0, 0, 2, 0, 0, 0, 0, 0, 1 },
 	{ 1, 0, 0, 0, 0, 0, 0, 0, 0, 1 },
 	{ 1, 0, 0, 0, 0, 0, 0, 0, 0, 1 },
 	{ 1, 0, 0, 0, 0, 0, 0, 0, 0, 1 },
@@ -99,20 +99,18 @@ void shortest_distance(t_all *all, int i) // choose the closeset wall hit coordi
 			all->cross.closest_cross = all->cross.h_distance; // remember this coordinate
 			all->cross.wall_x = all->cross.hx;
 			all->cross.wall_y = all->cross.hy;
-			all->cross.hit = 1; // remember that we hit the wall horizontally to check the wall after
-			//all->cross.offset = fmod(all->cross.wall_y, SCALE);
-			all->cross.offset[i] = fmod(all->cross.wall_x, SCALE);
+			all->cross.hit = 1; // remember that we hit the wall horizontally to check the wall side after
+			all->cross.offset[i] = fmod(all->cross.wall_x, SCALE); // calculate offset for drawing the wall
 		}
 		if (all->cross.h_distance > all->cross.v_distance)
 		{
 			all->cross.closest_cross = all->cross.v_distance;
 			all->cross.wall_x = all->cross.vx;
 			all->cross.wall_y = all->cross.vy;
-			all->cross.hit = 0; // remember that we hit the wall vertically to check the wall after
-			//all->cross.offset = fmod(all->cross.wall_x, SCALE);
-			all->cross.offset[i] = fmod(all->cross.wall_y, SCALE);
+			all->cross.hit = 0; // remember that we hit the wall vertically to check the wall side after
+			all->cross.offset[i] = fmod(all->cross.wall_y, SCALE); // calculate offset for drawing the wall
 		}
-		all->cross.right_distance = all->cross.closest_cross * cos(all->player.dir - all->player.fov_start); // for fisheye effect
+		all->cross.right_distance = all->cross.closest_cross * cos(all->player.dir - all->player.fov_start); // get rid of the fisheye effect
 }
 
 void fix_angle(float *angle)
@@ -125,7 +123,7 @@ void fix_angle(float *angle)
 
 void calculate_wall(t_all *all, int i)
 {
-	// all->player.slice_height[i] = S_HEIGHT * 64 / all->cross.right_distance;
+	// all->player.slice_height[i] = S_HEIGHT * 64 / all->cross.right_distance; - just another formula to calculate the wall height
 	all->player.slice_height[i] = ceil((SCALE / all->cross.right_distance) * all->player.dist_to_screen);
 	all->player.ceiling[i] = SCREEN_CENTER - (all->player.slice_height[i] / 2);     
 
@@ -145,9 +143,8 @@ void find_wall(t_all *all)
 		else
 			all->cross.hit_side = north;
 	}
-	// if (all->player.fov_start > M_PI && all->player.fov_start < 2 * M_PI)
-	else
-	{
+	else // if (all->player.fov_start > M_PI && all->player.fov_start < 2 * M_PI)
+	{ 
 		if (all->cross.hit == 0)
 		{
 			if (all->player.fov_start > M_PI && all->player.fov_start < 3 * M_PI_2)
@@ -156,8 +153,7 @@ void find_wall(t_all *all)
 				all->cross.hit_side = east;
 		}
 		else
-			all->cross.hit_side = south;
-		
+			all->cross.hit_side = south;	
 	}
 }
 

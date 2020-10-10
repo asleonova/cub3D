@@ -18,7 +18,8 @@ SRCS = ./src/main.c \
 	./src/inits.c \
 	./src/drawing.c \
 	./src/calculations.c \
-	./src/player_move.c
+	./src/player_move.c \
+	./src/raycasting.c
 
 
 OBJS = $(SRCS:.c=.o)
