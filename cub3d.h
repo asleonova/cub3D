@@ -50,8 +50,14 @@ typedef struct  s_sprite {
     float x;
     float y;
     float dir; // угол между линией от игрока к спрайту и осью x.
-    float sp_dir; // относительный угол между направлением взгляда игрока и спрайтом 
-
+    float delta; // относительный угол между направлением взгляда игрока и спрайтом 
+    float dist; // расстояние между игроком и спрайтом
+    float size; // размер спрайта
+    int     img_height;
+    float     h_offset; // координаты верхнего левого угла спрайта на экране
+    float     v_offset;  // координаты верхнего левого угла спрайта на экране
+    float     height;
+    float     width;
 
 }               t_sprite;
 typedef enum    e_hit_side
@@ -141,7 +147,10 @@ void    fix_angle(float *angle);
 void    calculate_wall(t_all *all, int i);
 void    find_wall(t_all *all);
 
+void draw_sprite(t_all *all, int i);
 int     control_player(int keycode, t_all *all);
 int     render_next_frame(t_all *all);
+void	draw_ray(t_all *all);
+// void	find_two(t_all *all);
 
 #endif

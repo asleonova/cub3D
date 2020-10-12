@@ -17,9 +17,11 @@ static void	cast_rays(t_all *all)
 		shortest_distance(all, i);
 		calculate_wall(all, i);
 		find_wall(all);
+		// draw_ray(all);
 		draw_ceiling(all, i);
 		draw_wall(all, i);
 		draw_floor(all, i);
+		draw_sprite(all, i);
 		all->player.fov_start -= all->player.angle; // change the ray position
 		i++;
 	}
@@ -29,9 +31,10 @@ static void	cast_rays(t_all *all)
 */
 int     render_next_frame(t_all *all)
 {
-	//draw_map(all);
-	//draw_player(all); 
+	// draw_map(all);
+	// draw_player(all);
 	cast_rays(all);
 	mlx_put_image_to_window(all->data.mlx, all->data.mlx_win, all->data.img, 0, 0);
+	mlx_do_sync(all->data.mlx);
 	return (1);
 }

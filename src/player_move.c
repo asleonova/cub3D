@@ -35,5 +35,7 @@ int control_player(int keycode, t_all *all)
 		all->player.dir -= 0.03;
 		fix_angle(&all->player.dir);
 	}
+	// printf("%f\n", all->player.x);
+	// printf("%f\n", all->player.y);
 	return (0);
 }
