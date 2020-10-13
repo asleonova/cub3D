@@ -35,6 +35,6 @@ int     render_next_frame(t_all *all)
 	// draw_player(all);
 	cast_rays(all);
 	mlx_put_image_to_window(all->data.mlx, all->data.mlx_win, all->data.img, 0, 0);
-	mlx_do_sync(all->data.mlx);
+	mlx_do_sync(all->data.mlx); // это чтоб не было мусора на изображении
 	return (1);
 }

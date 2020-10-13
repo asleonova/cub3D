@@ -50,5 +50,6 @@ void init_all(t_all *all)
 {
 	init_player(all);
 	init_textures(all);
+	init_sprites(all);
 	// find_two(all);
 }

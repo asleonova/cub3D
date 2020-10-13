@@ -126,7 +126,7 @@ typedef struct  s_all
     t_map   map;
     t_cross cross;
     t_texture_data texture[4];
-    t_sprite    sprite;
+    t_sprite    **sprite;
 }               t_all;
 
 void    init_all(t_all *all);
@@ -152,5 +152,6 @@ int     control_player(int keycode, t_all *all);
 int     render_next_frame(t_all *all);
 void	draw_ray(t_all *all);
 // void	find_two(t_all *all);
+t_sprite **init_sprites(t_all *all);
 
 #endif
