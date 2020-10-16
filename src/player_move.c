@@ -22,8 +22,8 @@ int control_player(int keycode, t_all *all)
 		}
     else if (keycode == W)
        {
-		   all->player.x += 5 * cos(all->player.dir);
-			all->player.y -= 5 * sin(all->player.dir);
+		   all->player.x += 0.1 * cos(all->player.dir);
+			all->player.y -= 0.1 * sin(all->player.dir);
 	   }
 	else if (keycode == LEFT)
 	{
@@ -35,7 +35,7 @@ int control_player(int keycode, t_all *all)
 		all->player.dir -= 0.03;
 		fix_angle(&all->player.dir);
 	}
-	// printf("%f\n", all->player.x);
-	// printf("%f\n", all->player.y);
+	printf("%f\n", all->player.x);
+	printf("%f\n", all->player.y);
 	return (0);
 }

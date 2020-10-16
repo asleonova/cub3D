@@ -26,9 +26,9 @@
 #define S 1
 #define D 2
 #define ESC 53
-#define SCALE 64
 #define LEFT 123
 #define RIGHT 124
+#define SCALE 64
 #define MAX 640
 #define S_WIDTH 1200 // length of the screen
 #define S_HEIGHT 800 // width of the screen
@@ -147,11 +147,11 @@ void    fix_angle(float *angle);
 void    calculate_wall(t_all *all, int i);
 void    find_wall(t_all *all);
 
-void draw_sprite(t_all *all, int i);
 int     control_player(int keycode, t_all *all);
 int     render_next_frame(t_all *all);
 void	draw_ray(t_all *all);
 // void	find_two(t_all *all);
 t_sprite **init_sprites(t_all *all);
+void draw_all_sprites(t_all *all, int i);
 
 #endif

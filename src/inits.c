@@ -3,7 +3,7 @@
 static void init_player(t_all *all)
 {
 	all->player.x = 187;
-	all->player.y = 213;
+	all->player.y = 490;
 	all->player.dir = 3 * M_PI_2;
 	all->player.angle = (M_PI / 3) / S_WIDTH; // fov / width of projection plane
 	all->player.dist_to_screen = (S_WIDTH / 2) / tan(M_PI / 6); // 1/2 screen / tan(30)
