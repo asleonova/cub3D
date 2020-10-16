@@ -3,8 +3,8 @@
 static void init_player(t_all *all)
 {
 	all->player.x = 187;
-	all->player.y = 490;
-	all->player.dir = 3 * M_PI_2;
+	all->player.y = 213;
+	all->player.dir = M_PI_4;
 	all->player.angle = (M_PI / 3) / S_WIDTH; // fov / width of projection plane
 	all->player.dist_to_screen = (S_WIDTH / 2) / tan(M_PI / 6); // 1/2 screen / tan(30)
 
@@ -38,6 +38,16 @@ static void get_texture_data_west(t_all *all)
 	all->texture[west].addr = mlx_get_data_addr(all->texture[west].img, &all->texture[west].bits_per_pixel, &all->texture[west].line_length, &all->texture[west].endian);
 }
 
+int			init_sp(t_all *all)
+{
+	if (!(all->sprite_order = (int *)malloc(sizeof(int) * 4))) // 4 - кол-во спрайтов
+		return (-1);
+	if (!(all->sprite_distance = (double *)malloc(
+				sizeof(double) * 4))) // 4 - кол-во спрайтов 
+		return (-1);
+	return (0);
+}
+
 static void init_textures(t_all *all)
 {
 	get_texture_data_north(all);
@@ -51,5 +61,6 @@ void init_all(t_all *all)
 	init_player(all);
 	init_textures(all);
 	init_sprites(all);
+	init_sp(all);
 	// find_two(all);
 }

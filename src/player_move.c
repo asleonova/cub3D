@@ -22,8 +22,8 @@ int control_player(int keycode, t_all *all)
 		}
     else if (keycode == W)
        {
-		   all->player.x += 0.1 * cos(all->player.dir);
-			all->player.y -= 0.1 * sin(all->player.dir);
+		   all->player.x += 5 * cos(all->player.dir);
+			all->player.y -= 5 * sin(all->player.dir);
 	   }
 	else if (keycode == LEFT)
 	{
