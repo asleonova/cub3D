@@ -3,60 +3,70 @@
 /*                                                        :::      ::::::::   */
 /*   ft_itoa.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alkanaev <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: dbliss <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/11/10 13:19:48 by alkanaev          #+#    #+#             */
-/*   Updated: 2019/11/18 14:03:25 by alkanaev         ###   ########.fr       */
+/*   Created: 2020/10/29 22:22:46 by dbliss            #+#    #+#             */
+/*   Updated: 2020/10/29 22:22:48 by dbliss           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-static long	ft_len(long num)
+static int	ft_len(int n)
 {
-	int	i;
+	int		len;
 
-	i = 0;
-	if (num == 0)
-		i++;
-	if (num < 0)
+	len = 1;
+	if (n < 0)
+		len++;
+	while ((n != 0) && (n <= -10 || n >= 10))
 	{
-		num = num * (-1);
-		i++;
+		n = n / 10;
+		len++;
 	}
-	while (num > 0)
+	return (len);
+}
+
+static char	*ft_stocknbr(int n, char *str)
+{
+	int		i;
+	int		power;
+	int		save;
+
+	i = -1;
+	power = 1;
+	save = n;
+	if (n < 0)
 	{
-		num = num / 10;
-		i++;
+		i = 0;
+		power = -1;
+		str[i] = '-';
 	}
-	return (i);
+	while (n <= -10 || n >= 10)
+	{
+		n = n / 10;
+		power = power * 10;
+	}
+	while (power != 0)
+	{
+		str[++i] = save / power + '0';
+		save = save - (save / power) * power;
+		power = power / 10;
+	}
+	return (str);
 }
 
 char		*ft_itoa(int n)
 {
-	char	*str;
-	long	num;
+	int		i;
 	int		len;
+	char	*out;
 
-	num = n;
-	len = ft_len(num) - 1;
-	str = NULL;
-	str = (char*)malloc(sizeof(char) * ft_len(num) + 1);
-	if (str == NULL)
-		return (NULL);
-	if (num == 0)
-		str[0] = '0';
-	if (num < 0)
-	{
-		str[0] = '-';
-		num = num * (-1);
-	}
-	while (num > 0)
-	{
-		str[len] = num % 10 + '0';
-		num = num / 10;
-		len--;
-	}
-	str[ft_len(n)] = '\0';
-	return (str);
+	i = 0;
+	len = ft_len(n);
+	if (!(out = malloc(sizeof(*out) * (len + 1))))
+		return (0);
+	out = ft_stocknbr(n, out);
+	out[len] = '\0';
+	return (out);
 }

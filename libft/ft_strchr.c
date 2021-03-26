@@ -3,29 +3,29 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strchr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alkanaev <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: dbliss <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/11/08 12:38:44 by alkanaev          #+#    #+#             */
-/*   Updated: 2019/11/18 13:46:08 by alkanaev         ###   ########.fr       */
+/*   Created: 2020/10/29 22:24:44 by dbliss            #+#    #+#             */
+/*   Updated: 2020/10/29 22:24:47 by dbliss           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-char	*ft_strchr(const char *str, int sym)
+char	*ft_strchr(const char *s, int c)
 {
-	char	*s2;
+	char	*str;
+	int		i;
 
-	s2 = (char*)str;
-	while (*s2)
+	str = (char *)s;
+	i = 0;
+	while (str[i])
 	{
-		if (*s2 == sym)
-		{
-			return (s2);
-		}
-		s2++;
+		if (str[i] == c)
+			return (&str[i]);
+		i++;
 	}
-	if (*s2 == '\0' && sym == '\0')
-		return (s2);
+	if (str[i] == c)
+		return (&str[i]);
 	return (NULL);
 }

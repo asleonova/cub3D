@@ -1,15 +1,23 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_calloc.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: dbliss <marvin@42.fr>                      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/10/29 22:21:28 by dbliss            #+#    #+#             */
+/*   Updated: 2020/10/29 22:21:30 by dbliss           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "libft.h"
 
-void	*ft_calloc(size_t num, size_t size)
+void	*ft_calloc(size_t count, size_t size)
 {
-	size_t			i;
-	unsigned char	*res;
+	void *nemo;
 
-	i = 0;
-	if (!(res = (unsigned char *)malloc(size * num)))
+	if (!(nemo = malloc(count * size)))
 		return (NULL);
-	ft_bzero(res, size * num);
-	if (num == 0 || size == 0)
-		return ((void*)res);
-	return(res);
+	ft_bzero(nemo, count * size);
+	return (nemo);
 }

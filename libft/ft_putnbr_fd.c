@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_putnbr_fd.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alkanaev <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: dbliss <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/11/08 12:37:32 by alkanaev          #+#    #+#             */
-/*   Updated: 2019/11/08 12:56:09 by alkanaev         ###   ########.fr       */
+/*   Created: 2020/10/29 22:24:14 by dbliss            #+#    #+#             */
+/*   Updated: 2020/10/29 22:24:17 by dbliss           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,18 +14,25 @@
 
 void	ft_putnbr_fd(int n, int fd)
 {
-	if (n == -2147483648)
-		ft_putstr_fd("-2147483648", fd);
-	else if (n < 0)
+	int	power;
+	int	save;
+
+	power = 1;
+	save = n;
+	if (n < 0)
 	{
+		power = -1;
 		ft_putchar_fd('-', fd);
-		ft_putnbr_fd(-n, fd);
 	}
-	else if (n >= 10)
+	while (n <= -10 || n >= 10)
 	{
-		ft_putnbr_fd(n / 10, fd);
-		ft_putchar_fd(n % 10 + '0', fd);
+		n = n / 10;
+		power = power * 10;
 	}
-	else
-		ft_putchar_fd(n + '0', fd);
+	while (power != 0)
+	{
+		ft_putchar_fd((save / power) + '0', fd);
+		save = save - (save / power) * power;
+		power = power / 10;
+	}
 }

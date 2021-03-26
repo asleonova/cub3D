@@ -1,58 +1,67 @@
-# **************************************************************************** #
-#                                                                              #
-#                                                         :::      ::::::::    #
-#    Makefile                                           :+:      :+:    :+:    #
-#                                                     +:+ +:+         +:+      #
-#    By: dbliss <dbliss@student.42.fr>              +#+  +:+       +#+         #
-#                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2020/08/05 12:46:16 by dbliss            #+#    #+#              #
-#    Updated: 2020/10/05 16:50:03 by dbliss           ###   ########.fr        #
-#                                                                              #
-# **************************************************************************** #
-
 NAME = cub3D
 
 HEADER = cub3d.h
 
-SRCS = ./src/main.c \
-	./src/inits.c \
-	./src/drawing.c \
-	./src/calculations.c \
-	./src/player_move.c \
-	./src/raycasting.c \
-	./src/sprites.c
-
-
-OBJS = $(SRCS:.c=.o)
-
-CC = gcc
-
-CFLAGS = -Wall -Wextra -Werror -c -g
-
-LIBFT_ARC = libft/libft.a
-MLX_ARC = ./mlx/libmlx.a
-
+SRCS =	parsing_cub_1.c \
+		parsing_cub_2.c \
+		parsing_cub_3.c \
+		check_ciphers_1.c \
+		check_ciphers_2.c \
+		parsing_convert_1.c \
+		parsing_convert_2.c \
+		calculate_walls.c \
+		draw_sprites.c \
+		drawing.c \
+		get_positions.c \
+		get_texture_data.c \
+		init_array_params.c \
+		inits.c \
+		errors.c \
+		player_move.c \
+		raycasting.c \
+		screenshot.c \
+		shortest_dist.c \
+		sprites_calculations.c \
+		sprites_data.c \
+		wall_cross.c \
+		utils.c \
+		texture_valid.c \
+		main.c \
 		
-all: $(NAME)
+OBJ = $(addprefix $(OBJ_DIR)/,$(SRCS:.c=.o))
 
-$(NAME): $(OBJS) $(LIBFT_ARC) $(MLX_ARC)
-	$(CC) -Lmlx -lmlx -framework OpenGL -framework AppKit -Llibft -lft $(OBJS) -o $(NAME)
+OBJ_DIR = obj
+SRC_DIR = src
+LIBFT_DIR = libft
+LIBFT = libft.a
+MLX_DIR = mlx
+MLX = libmlx.dylib
 
-%.o: %.c $(HEADER)
-	$(CC) $(CFLAGS) -Imlx -Ilibft $< -o $@
+CFLAGS = -Wall -Wextra -Werror -g
 
-$(LIBFT_ARC):
-	make -C libft
+all:
+	$(MAKE) -C $(MLX_DIR)
+	$(MAKE) -C $(LIBFT_DIR)
+	$(MAKE) -j $(NAME)
 
-$(MLX_ARC):
-	make -C mlx
+$(NAME): $(OBJ) $(HEADER)
+		@gcc $(CFLAGS) -o $(NAME) $(OBJ) -L $(MLX_DIR) -l mlx -L $(LIBFT_DIR) -l ft
+		@install_name_tool -change $(MLX) @loader_path/$(MLX_DIR)/$(MLX) $(NAME)
+		@echo $(NAME) : Awesome, everyting has compiled
+
+$(OBJ_DIR)/%.o: $(SRC_DIR)/%.c $(MLX_DIR)/$(MLX) $(LIBFT_DIR)/$(LIBFT)
+		@mkdir -p $(OBJ_DIR)
+		@gcc $(CFLAGS) -I $(MLX_DIR) -I $(LIBFT_DIR) -c $< -o $@
 
 clean:
-	make clean -C libft
-	rm -f $(OBJS)
-fclean: clean
-	make fclean -C libft
-	rm -f $(NAME)
+	$(MAKE) clean -C $(MLX_DIR)
+	$(MAKE) clean -C $(LIBFT_DIR)
+	rm -rf $(OBJ_DIR)
+
+fclean:	clean
+	rm -rf $(LIBFT_DIR)/$(LIBFT)
+	rm -rf $(NAME)
+
 re: fclean all
 
-.PHONY: all clean fclean re
+.PHONY: all, clean, fclean, re
