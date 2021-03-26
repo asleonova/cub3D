@@ -1,3 +1,3 @@
 # cub3D
 
-![alt tag](screenshot.png=250x250)
+![alt tag]("screenshot.png" width="48")
