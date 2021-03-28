@@ -1,6 +1,6 @@
 # cub3D
 
-This project is inspired by the world-famous eponymous 90's game, Wolfenstein 3D, which was the first FPS ever. The idea was to make a dynamic view inside a maze using ray-casting. The graphics is done with the help of minilibx library. [minilibx documentation](https://harm-smits.github.io/42docs/libs/minilibx)
+This project is inspired by the world-famous eponymous 90's game, Wolfenstein 3D, which was the first FPS ever. The idea was to make a dynamic view inside a maze using ray-casting. The graphics is done with the help of minilibx library: [minilibx documentation](https://harm-smits.github.io/42docs/libs/minilibx)
 
 ![alt tag](screenshot.png)
 
